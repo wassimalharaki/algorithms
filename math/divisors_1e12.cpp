@@ -40,7 +40,9 @@ vector<int> gen_divisors(vector<pair<int, int>>& pfs) {
 }
 
 // O(sqrt(n) / log(sqrt(n)) + d(n))
-vector<int> divisors_sqrd(int n) {
+vector<int> divisors(int n) {
+    if (primes.size() == 1) build();
+
     vector<pair<int, int>> pfs;
     for (int& p : primes) {
         if (p * p > n) break;
@@ -52,5 +54,6 @@ vector<int> divisors_sqrd(int n) {
         } 
     }
     if (n != 1) pfs.push_back({n, 1});
+    
     return gen_divisors(pfs);
 }

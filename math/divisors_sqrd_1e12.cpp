@@ -39,6 +39,7 @@ vector<int> gen_divisors(vector<pair<int, int>>& pfs) {
 // O(log(n) + d(n^2))
 vector<int> divisors_sqrd(int n) {
     if (n == 1) return {1};
+    if (primes.empty()) build();
 
     vector<pair<int, int>> pfs{{spf[n], 2}};
     n /= spf[n];
