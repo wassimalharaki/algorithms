@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(log(min(a, b)))
 int gcd(int a, int b, int& x, int& y) {
     x = 1, y = 0;
     int x1 = 0, y1 = 1;
@@ -13,6 +14,7 @@ int gcd(int a, int b, int& x, int& y) {
     return a;
 }
 
+// O(log(min(a, b)))
 int modinv(int a, const int m) {
     int x, y;
     int g = gcd(a, m, x, y);

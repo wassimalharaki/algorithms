@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(n)
 vector<int> kmp(string& s) {
     int n = s.length();
     vector<int> pi(n);

@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(n)
 vector<int> manacher(string& t) {
     string s{'$'};
     for(char& c: t) s += string{'#', c};
@@ -19,7 +20,7 @@ vector<int> manacher(string& t) {
     return vector<int>(begin(p) + 2, end(p) - 2);
 }
 
-//check if [l; r] is a palindrome
+// O(1)
 bool is_palindrome(vector<int>& man, int l, int r) {
     return man[l + r] >= r - l + 1;
 }

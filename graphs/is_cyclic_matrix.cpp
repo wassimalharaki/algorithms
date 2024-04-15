@@ -2,6 +2,7 @@
 using namespace std;
 #define v vector
 
+// O(V^2)
 bool is_cyclic(v<v<int>>& adj) {
     int n = adj.size();
     

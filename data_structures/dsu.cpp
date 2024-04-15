@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(n), O(log(n))
 struct DSU {
     vector<int> p;
     int comp;

@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-//ax + by = gcd(a, b)
+// O(log(min(a, b)))
 int gcd(int a, int b, int& x, int& y) {
     x = 1, y = 0;
     int x1 = 0, y1 = 1;
@@ -11,13 +11,10 @@ int gcd(int a, int b, int& x, int& y) {
         tie(y, y1) = make_pair(y1, y - q * y1);
         tie(a, b) = make_pair(b, a - q * b);
     }
-    return a; //gcd
+    return a;
 }
 
-//ax + by = c
-//c must be = gcd(a, b) * k
-//CHECK
-//a != 0 and b != 0 (either no solution or infinite nb of solutions)
+// O(log(min(a, b)))
 bool find_any_solution(int a, int b, int c, int &x0, int &y0) {
     int g = gcd(abs(a), abs(b), x0, y0);
     if (c % g) return 0;

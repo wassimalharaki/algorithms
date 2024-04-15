@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(VE)
 vector<int> bellman_ford(int src, int n, vector<vector<int>>& edges) {
     vector<int> d(n, INT_MAX);
     d[src] = 0;

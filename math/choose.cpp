@@ -6,6 +6,7 @@ const int N = 1e6 + 1;
 const int mod = 1e9 + 7;
 int fact[N];
 
+// O(log(min(a, b)))
 int gcd(int a, int b, int& x, int& y) {
     x = 1, y = 0;
     int x1 = 0, y1 = 1;
@@ -18,16 +19,19 @@ int gcd(int a, int b, int& x, int& y) {
     return a;
 }
 
+// O(log(a))
 int modinv(int a) {
     int x, y;
     int g = gcd(a, mod, x, y);
     return (g == 1 ? (x % mod + mod) % mod : 0);
 }
 
+// O(log(max((n - r)!, r!)))
 int choose(int n, int r) {
     return fact[n] * modinv(fact[n - r] * fact[r] % mod) % mod;
 }
 
+// O(N)
 void build() {
     fact[0] = fact[1] = 1;
     for (int i = 2; i < N; i++)

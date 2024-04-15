@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(N)
 const int N = 1e6;
 vector<int> spf, primes;
 void build() {
@@ -18,11 +19,20 @@ void build() {
     }
 }
 
-vector<int> pf(int n) {
-    vector<int> pfs;
+// O(log(n))
+vector<array<int, 2>> prime_factors(int n) {
+    if (n == 1) return {{1, 1}};
+    if (primes.empty()) build();
+
+    vector<array<int, 2>> pfs{{spf[n], 1}};
+    n /= spf[n];
     while (n != 1) {
-        pfs.push_back(spf[n]);
+        if (pfs.back()[0] == spf[n])
+            pfs.back()[1]++;
+        else
+            pfs.push_back({spf[n], 1});
         n /= spf[n];
     }
+
     return pfs;
 }

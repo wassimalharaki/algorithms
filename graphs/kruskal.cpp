@@ -2,6 +2,7 @@
 using namespace std;
 #define v vector
 
+// O(n), O(log(n))
 struct DSU {
     vector<int> p;
 
@@ -28,6 +29,7 @@ struct DSU {
     }
 };
 
+// O(nlog(n))
 int kruskal(int n, v<array<int, 3>>& edges) {
     sort(edges.begin(), edges.end());
 

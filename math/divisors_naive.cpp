@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(sqrt(n))
 vector<int> divisors(int n) {
     vector<int> divs;
 

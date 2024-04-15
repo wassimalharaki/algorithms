@@ -7,23 +7,23 @@ using namespace std;
 
 using pii = pair<int, int>;
 
+// O(Elog(V))
 v<int> dijkstra(int src, v<v<pii>>& adj) {
-    v<int> d(adj.size(), INT_MAX);
+    int n = adj.size();
+    v<int> d(n, INT_MAX);
+    v<bool> vis(n);
     priority_queue<pii, v<pii>, greater<pii>> pq;
-    v<int> vis(adj.size(), 0);
 
     d[src] = 0;
     pq.push({0, src});
 
-    while (not pq.empty()) {
-        int u = pq.top().S;
-        int w = pq.top().F;
-        pq.pop();
+    while (pq.size()) {
+        auto [w, u] = pq.top();
 
         if (vis[u]) continue;
         vis[u] = 1;
 
-        for (auto i : adj[u])
+        for (pii& i : adj[u])
             if (w + i.F < d[i.S]) {
                 d[i.S] = w + i.F;
                 pq.push({d[i.S], i.S});
