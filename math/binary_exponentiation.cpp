@@ -4,7 +4,7 @@ using namespace std;
 // O(log(b))
 int binpow(int a, int b) {
     int res = 1;
-    while (b > 0) {
+    while (b) {
         if (b & 1)
             res *= a;
         a *= a;
@@ -17,7 +17,7 @@ int binpow(int a, int b) {
 int binpow(int a, int b, const int m) {
     a %= m;
     int res = 1;
-    while (b > 0) {
+    while (b) {
         if (b & 1)
             res = res * a % m;
         a = a * a % m;

@@ -19,7 +19,6 @@ struct DSU {
         if (x == y) return false;
         if (p[x] > p[y]) swap(x, y);
         p[x] += p[y]; p[y] = x;
-        comp--;
-        return true;
+        comp--; return true;
     }
 };

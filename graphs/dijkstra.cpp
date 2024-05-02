@@ -11,7 +11,7 @@ using pii = pair<int, int>;
 v<int> dijkstra(int src, v<v<pii>>& adj) {
     int n = adj.size();
     v<int> d(n, INT_MAX);
-    v<bool> vis(n);
+    v<char> vis(n);
     priority_queue<pii, v<pii>, greater<pii>> pq;
 
     d[src] = 0;

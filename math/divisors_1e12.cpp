@@ -24,6 +24,7 @@ void build() {
             primes.push_back(i);
 }
 
+// O(d(n^p))
 vector<int> gen_divisors(const vector<array<int, 2>>& pfs) {
     vector<int> divs{1};
 

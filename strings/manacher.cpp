@@ -22,5 +22,5 @@ vector<int> manacher(string& t) {
 
 // O(1)
 bool is_palindrome(vector<int>& man, int l, int r) {
-    return man[l + r] >= r - l + 1;
+    return man[l + r - 1] >= r - l;
 }
