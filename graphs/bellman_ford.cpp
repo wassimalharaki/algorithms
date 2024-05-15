@@ -14,7 +14,7 @@ vector<int> bellman_ford(int src, int n, vector<vector<int>>& edges) {
     // TO DETECT NEGATIVE WEIGHT CYCLES
     for (auto j : edges)
         if (d[j[0]] + j[2] < d[j[1]])
-            throw new exception;
+            return {};
 
     return d;
 }

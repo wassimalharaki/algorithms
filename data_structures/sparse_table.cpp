@@ -1,18 +1,19 @@
 #include <bits/stdc++.h>
 using namespace std;
+#define v vector
 
-//O(nlog(n))
+// O(nlog(n)), O(1)
 template <class S, S (*op)(S, S)>
 struct sparse_table {
-    const int n = 25;
-    vector<vector<S>> d;
+    v<v<S>> d;
 
-    sparse_table(vector<S>& nums) {
-        d = vector<vector<S>>(n + 1, vector<S>(nums.size()));
+    sparse_table(v<S>& nums) {
+        int n = nums.size(), k = 64 - __builtin_clzll(n);
+        d = v<v<S>>(k, v<S>(n));
         copy(nums.begin(), nums.end(), d[0].begin());
 
-        for (int i = 1; i <= n; i++)
-            for (int j = 0; j + (1 << i) <= nums.size(); j++)
+        for (int i = 1; i <= k; i++)
+            for (int j = 0; j + (1 << i) <= n; j++)
                 d[i][j] = op(d[i - 1][j], d[i - 1][j + (1 << (i - 1))]);
     }
 
