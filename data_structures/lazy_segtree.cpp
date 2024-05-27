@@ -16,13 +16,13 @@ struct lazy_segtree {
 
     lazy_segtree(int n) : lazy_segtree(vector<S>(n, e())) {}
 
-    lazy_segtree(const vector<S>& nums) {
-        n = nums.size();
+    lazy_segtree(const vector<S>& a) {
+        n = a.size();
         size = bit_ceil(n);
         log = __builtin_ctz(size);
         d = vector<S>(size << 1, e());
         lz = vector<F>(size, id());
-        for (int i = 0; i < n; i++) d[size + i] = nums[i];
+        for (int i = 0; i < n; i++) d[size + i] = a[i];
         for (int i = size - 1; i >= 1; i--) update(i);
     }
 

@@ -7,10 +7,10 @@ template <class S, S (*op)(S, S)>
 struct sparse_table {
     v<v<S>> d;
 
-    sparse_table(v<S>& nums) {
-        int n = nums.size(), k = 64 - __builtin_clzll(n);
+    sparse_table(v<S>& a) {
+        int n = a.size(), k = 64 - __builtin_clzll(n);
         d = v<v<S>>(k, v<S>(n));
-        copy(nums.begin(), nums.end(), d[0].begin());
+        copy(a.begin(), a.end(), d[0].begin());
 
         for (int i = 1; i <= k; i++)
             for (int j = 0; j + (1 << i) <= n; j++)

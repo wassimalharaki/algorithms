@@ -7,9 +7,24 @@ random_device rd;
 mt19937_64 gen(rd());
 uniform_int_distribution<int> dist(1, 1);
 
+void time() {
+    auto start = chrono::high_resolution_clock::now();
+    auto end = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start).count(); 
+    cout << "\n=====" << "\nUsed: " << duration << " ms\n";
+}
+
 int random(int a, int b) {
     dist.param(uniform_int_distribution<int>::param_type(a, b));
     return dist(gen);
+}
+
+int random_mod(int i) {
+    return random(0, 1e18) % i;
+}
+
+void shuffle(vector<int>& a) {
+    random_shuffle(a.begin(), a.end(), random_mod);
 }
 
 signed main() {

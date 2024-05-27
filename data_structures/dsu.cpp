@@ -6,7 +6,7 @@ struct DSU {
     vector<int> p;
     int comp;
 
-    DSU(int n) { p = vector<int>(n, -1); comp = n; }
+    DSU(int n) { p.resize(n, -1); comp = n; }
 
     int find(int x) { return p[x] < 0 ? x : p[x] = find(p[x]); }
 

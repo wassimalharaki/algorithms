@@ -26,7 +26,7 @@ int modinv(int a) {
     return (g == 1 ? (x % mod + mod) % mod : 0);
 }
 
-// O(log(max((n - r)!, r!)))
+// O(log(max((n - r)! % mod, r! % mod)))
 int choose(int n, int r) {
     return fact[n] * modinv(fact[n - r] * fact[r] % mod) % mod;
 }

@@ -9,12 +9,12 @@ struct segtree {
 
     segtree(int n) : segtree(vector<S>(n, e())) {}
     
-    segtree(const vector<S>& nums) {
-        n = nums.size();
+    segtree(const vector<S>& a) {
+        n = a.size();
         size = bit_ceil(n);
         log = __builtin_ctz(size);
         d = vector<S>(size << 1, e());
-        for (int i = 0; i < n; i++) d[size + i] = nums[i];
+        for (int i = 0; i < n; i++) d[size + i] = a[i];
         for (int i = size - 1; i >= 1; i--) update(i);
     }
 
