@@ -6,84 +6,81 @@ struct sparse_segtree {
     struct node {
         F l, r;
         S x = e();
-        node *left_child = 0, *right_child = 0, *parent;
-
-        node(F _l, F _r, node *_parent) {
-            l = _l, r = _r, parent = _parent;
-        }
-
-        node* get_left_child() {
-            if (left_child == 0)
-                left_child = new node(l, l + r >> 1, this);
-            return left_child;
-        }
-
-        node* get_right_child() {
-            if (right_child == 0)
-                right_child = new node(l + r >> 1, r, this);
-            return right_child;
-        }
-
-        void update() {
-            x = op(
-                left_child ? left_child -> x : e(),
-                right_child ? right_child -> x : e()
-            );
-        }
+        int lc = 0, rc = 0, p;
     };
-    typedef node* nodeptr;
-    nodeptr root;
+    const int max_nodes = 1e7; // >=228mb
+    vector<node> d;
+    int k = 0, root = 1;
+
+    int add_node(F l, F r, int p) {
+        tie(d[k].l, d[k].r, d[k].p) = {l, r, p};
+        return k++;
+    }
+
+    int get_lc(int i) {
+        if (!d[i].lc)
+            d[i].lc = add_node(d[i].l, d[i].l + d[i].r >> 1, i);
+        return d[i].lc;
+    }
+
+    int get_rc(int i) {
+        if (!d[i].rc)
+            d[i].rc = add_node(d[i].l + d[i].r >> 1, d[i].r, i);
+        return d[i].rc;
+    }
+
+    void update(int i) {
+        d[i].x = op(d[d[i].lc].x, d[d[i].rc].x);
+    }
 
     sparse_segtree(F n) {
-        root = new node((F) 0, n, 0);
+        d.resize(max_nodes);
+        add_node((F) -1, (F) -1, -1);
+        add_node((F) 0, n, 0);
     }
 
     S get(F i) {
-        nodeptr curr = root;
-        while (curr and (i != curr -> l or curr -> l + 1 != curr -> r))
-            curr = i < curr -> l + curr -> r >> 1 ?
-                curr -> left_child :
-                curr -> right_child;
-        return curr ? curr -> x : e();
+        int j = root;
+        while (j and (i != d[j].l or d[j].l + 1 != d[j].r))
+            j = i < d[j].l + d[j].r >> 1 ?
+                d[j].lc :
+                d[j].rc;
+        return d[j].x;
     }
 
     void set(F i, S x) {
-        nodeptr curr = root;
-        while (curr -> l != i or curr -> l + 1 != curr -> r)
-            curr = i < curr -> l + curr -> r >> 1 ?
-                curr -> get_left_child() :
-                curr -> get_right_child();
-        
-        curr -> x = x;
-        while (curr -> parent) {
-            curr = curr -> parent;
-            curr -> update();
+        int j = root;
+        while (d[j].l != i or d[j].l + 1 != d[j].r)
+            j = i < d[j].l + d[j].r >> 1 ?
+                get_lc(j) :
+                get_rc(j);
+
+        d[j].x = x;
+        while (d[j].p) {
+            j = d[j].p;
+            update(j);
         }
     }
 
     void apply(F i, S x) {
-        nodeptr curr = root;
-        curr -> x = op(curr -> x, x);
-        while (curr -> l != i or curr -> l + 1 != curr -> r) {
-            curr = i < curr -> l + curr -> r >> 1 ?
-                curr -> get_left_child() :
-                curr -> get_right_child();
-            curr -> x = op(curr -> x, x);
+        int j = root;
+        d[j].x = op(d[j].x, x);
+        while (d[j].l != i or d[j].l + 1 != d[j].r) {
+            j = i < d[j].l + d[j].r >> 1 ?
+                get_lc(j) :
+                get_rc(j);
+            d[j].x = op(d[j].x, x);
         }
     }
 
-    S prod(F l, F r) {
-        return prod_util(l, r, root);
-    }
-
-    S prod_util(F l, F r, nodeptr curr) {
-        if (curr == 0 or curr -> r <= l or curr -> l >= r)
+    S prod(F l, F r, int j = 1) {
+        if (j == 0 or d[j].r <= l or d[j].l >= r)
             return e();
-        if (l <= curr -> l and curr -> r <= r)
-            return curr -> x;
+        if (l <= d[j].l and d[j].r <= r)
+            return d[j].x;
         return op(
-            prod_util(l, r, curr -> left_child),
-            prod_util(l, r, curr -> right_child)
+            prod(l, r, d[j].lc),
+            prod(l, r, d[j].rc)
         );
     }
 };
