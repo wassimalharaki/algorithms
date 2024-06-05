@@ -88,6 +88,7 @@ struct scc_graph {
     }
 };
 
+// O(V + E)
 struct two_sat {
     int _n;
     v<bool> _answer;

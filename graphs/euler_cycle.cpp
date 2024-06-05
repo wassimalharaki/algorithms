@@ -2,6 +2,7 @@
 using namespace std;
 #define v vector
 
+// O(E)
 v<int> euler_cycle(v<v<array<int, 2>>> adj, int src = 0) {
     int m = 0;
     for (auto& a : adj) {

@@ -2,10 +2,7 @@
 using namespace std;
 #define int long long
 #define nl '\n'
-
-random_device rd;
-mt19937_64 gen(rd());
-uniform_int_distribution<int> dist(1, 1);
+#define v vector
 
 void time() {
     auto start = chrono::high_resolution_clock::now();
@@ -13,6 +10,9 @@ void time() {
     auto duration = chrono::duration_cast<chrono::milliseconds>(end - start).count(); 
     cout << "\n=====" << "\nUsed: " << duration << " ms\n";
 }
+
+mt19937_64 gen(random_device{}());
+uniform_int_distribution<int> dist(1, 1);
 
 int random(int a, int b) {
     dist.param(uniform_int_distribution<int>::param_type(a, b));

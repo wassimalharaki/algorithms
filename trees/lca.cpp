@@ -31,7 +31,7 @@ struct LCA {
 
     void build(v<ai2>& a) {
         int n = a.size(), k = 64 - __builtin_clzll(n);
-        d = v<v<ai2>>(k, v<ai2>(n));
+        d.resize(k, v<ai2>(n));
         copy(a.begin(), a.end(), d[0].begin());
  
         for (int i = 1; i <= k; i++)

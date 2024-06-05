@@ -2,6 +2,7 @@
 using namespace std;
 #define v vector
 
+// O(E)
 v<int> euler_path(v<v<int>> adj, int src, int dst) {
     int n = adj.size(), m = 0;
 

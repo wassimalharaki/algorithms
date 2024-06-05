@@ -2,6 +2,7 @@
 using namespace std;
 #define v vector
 
+// O(V + E)
 v<int> comp, comps;
 void tarjan(v<v<int>>& adj) {
     int n = adj.size(), curr = 0;
