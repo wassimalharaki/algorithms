@@ -1,6 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+// O(n * m)
 struct prefix_2d {
     vector<vector<int>> d;
 

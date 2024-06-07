@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// O(nlog(n)), O(log(n))
+// O(n), O(log(n))
 template <class S,
           S (*op)(S, S),
           S (*e)(),
@@ -20,8 +20,8 @@ struct lazy_segtree {
         n = a.size();
         size = bit_ceil(n);
         log = __builtin_ctz(size);
-        d = vector<S>(size << 1, e());
-        lz = vector<F>(size, id());
+        d.resize(size << 1, e());
+        lz.resize(size, id());
         for (int i = 0; i < n; i++) d[size + i] = a[i];
         for (int i = size - 1; i >= 1; i--) update(i);
     }
