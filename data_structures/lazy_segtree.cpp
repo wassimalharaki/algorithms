@@ -6,7 +6,7 @@ template <class S,
           S (*op)(S, S),
           S (*e)(),
           class F,
-          S (*mapping)(F, S),
+          S (*mapping)(F, S, int),
           F (*composition)(F, F),
           F (*id)()>
 struct lazy_segtree {
@@ -29,7 +29,7 @@ struct lazy_segtree {
     void update(int k) { d[k] = op(d[k << 1], d[(k << 1) + 1]); }
 
     void all_apply(int k, F f) {
-        d[k] = mapping(f, d[k]);
+        d[k] = mapping(f, d[k], 1 << (log - __lg(k)));
         if (k < size) lz[k] = composition(f, lz[k]);
     }
 
@@ -60,9 +60,7 @@ struct lazy_segtree {
 
     S prod(int l, int r) {
         if (l == r) return e();
-
-        l += size;
-        r += size;
+        l += size, r += size;
 
         for (int i = log; i >= 1; i--) {
             if (((l >> i) << i) != l) push(l >> i);
@@ -85,15 +83,13 @@ struct lazy_segtree {
     void apply(int p, F f) {
         p += size;
         for (int i = log; i >= 1; i--) push(p >> i);
-        d[p] = mapping(f, d[p]);
+        d[p] = mapping(f, d[p], 1);
         for (int i = 1; i <= log; i++) update(p >> i);
     }
 
     void apply(int l, int r, F f) {
         if (l == r) return;
-
-        l += size;
-        r += size;
+        l += size, r += size;
 
         for (int i = log; i >= 1; i--) {
             if (((l >> i) << i) != l) push(l >> i);

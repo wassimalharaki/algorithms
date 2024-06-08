@@ -7,6 +7,7 @@ const int M = 1e9 + 9;
 const int B = uniform_int_distribution<int>(0, M - 1)(gen);
 vector<int> p{1};
 
+// O(n)
 struct single_hash {
     vector<int> h;
 

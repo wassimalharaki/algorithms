@@ -1,7 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define v vector
- 
+
+// O(nlog(n)), O(1)
 struct LCA {
     using ai2 = array<int, 2>;
     v<int> in;

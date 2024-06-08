@@ -2,7 +2,7 @@
 using namespace std;
 
 // O(nlog(n)), O(1)
-template <class S, S (*op)(S, S)>
+template <class S, S (*op)(S, S), S (*e)()>
 struct sparse_table {
     vector<vector<S>> d;
 
@@ -17,6 +17,7 @@ struct sparse_table {
     }
 
     S prod(int l, int r) {
+        if (l == r) return e();
         int i = 63 - __builtin_clzll(r - l);
         return op(d[i][l], d[i][r - (1 << i)]);
     }

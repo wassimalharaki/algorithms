@@ -8,6 +8,7 @@ const array<const int, 2> M{(int) 1e9 + 7, (int) 1e9 + 9};
 const array<const int, 2> B{dist(gen), dist(gen)};
 vector<vector<int>> p{{1}, {1}};
 
+// O(n)
 struct pair_hash {
     vector<vector<int>> h{{}, {}};
 
