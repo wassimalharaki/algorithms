@@ -11,7 +11,7 @@ struct sparse_segtree {
     };
     const int max_nodes = 1e7; // >=228mb
     vector<node> d;
-    int k = 0, root = 1;
+    int k = 0;
 
     int add_node(F l, F r, int p) {
         tie(d[k].l, d[k].r, d[k].p) = {l, r, p};
@@ -41,7 +41,7 @@ struct sparse_segtree {
     }
 
     S get(F i) {
-        int j = root;
+        int j = 1;
         while (j and (i != d[j].l or d[j].l + 1 != d[j].r))
             j = i < d[j].l + d[j].r >> 1 ?
                 d[j].lc :
@@ -50,7 +50,7 @@ struct sparse_segtree {
     }
 
     void set(F i, S x) {
-        int j = root;
+        int j = 1;
         while (d[j].l != i or d[j].l + 1 != d[j].r)
             j = i < d[j].l + d[j].r >> 1 ?
                 get_lc(j) :
@@ -64,7 +64,7 @@ struct sparse_segtree {
     }
 
     void apply(F i, S x) {
-        int j = root;
+        int j = 1;
         d[j].x = op(d[j].x, x);
         while (d[j].l != i or d[j].l + 1 != d[j].r) {
             j = i < d[j].l + d[j].r >> 1 ?

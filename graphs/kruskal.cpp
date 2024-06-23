@@ -2,11 +2,12 @@
 using namespace std;
 #define v vector
 
-// O(n), O(log(n))
+// O(n), O(1)
 struct DSU {
     vector<int> p;
+    int comp;
 
-    DSU(int n) { p = vector<int>(n, -1); }
+    DSU(int n) { p.resize(n, -1); comp = n; }
 
     int find(int x) { return p[x] < 0 ? x : p[x] = find(p[x]); }
 
@@ -19,17 +20,11 @@ struct DSU {
         if (x == y) return false;
         if (p[x] > p[y]) swap(x, y);
         p[x] += p[y]; p[y] = x;
-        return true;
-    }
-
-    int components() {
-        int x = 0;
-        for (int& i : p) if (i < 0) x++;
-        return x;
+        comp--; return true;
     }
 };
 
-// O(nlog(n))
+// O(n)
 int kruskal(int n, v<array<int, 3>>& edges) {
     sort(edges.begin(), edges.end());
 

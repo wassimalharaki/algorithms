@@ -5,7 +5,7 @@ using namespace std;
 // O(V + E)
 bool is_cyclic(v<v<int>>& adj) {
     int n = adj.size();
-    
+
     v<char> c(n);
     auto dfs = [&](int u, auto&& dfs) -> bool {
         c[u] = 1;

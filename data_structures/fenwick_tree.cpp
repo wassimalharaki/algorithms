@@ -1,7 +1,7 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-// O(log(n))
+// O(n), O(log(n))
 template <class T>
 struct BIT {
     int n;
