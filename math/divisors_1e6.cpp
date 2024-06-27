@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
 
 // O(N)
 const int N = 1e6 + 1;

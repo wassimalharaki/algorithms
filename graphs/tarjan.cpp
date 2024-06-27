@@ -6,6 +6,7 @@ using namespace std;
 v<int> comp, comps;
 void tarjan(v<v<int>>& adj) {
     int n = adj.size(), curr = 0;
+    comps.clear();
     comp.assign(n, -1);
     v<int> disc(n), vis;
 

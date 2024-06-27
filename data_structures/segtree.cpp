@@ -7,7 +7,7 @@ struct segtree {
     int n, size, log;
     vector<S> d;
 
-    segtree(int n) : segtree(vector<S>(n, e())) {}
+    segtree(int _n) : segtree(vector<S>(_n, e())) {}
     
     segtree(const vector<S>& a) {
         n = a.size();
@@ -20,7 +20,7 @@ struct segtree {
 
     void update(int k) { d[k] = op(d[k << 1], d[(k << 1) + 1]); }
 
-    int bit_ceil(int n) {
+    int bit_ceil(int _n) {
         int x = 1;
         while (x < n) x <<= 1;
         return x;

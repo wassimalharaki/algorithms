@@ -14,7 +14,7 @@ struct lazy_segtree {
     vector<S> d;
     vector<F> lz;
 
-    lazy_segtree(int n) : lazy_segtree(vector<S>(n, e())) {}
+    lazy_segtree(int _n) : lazy_segtree(vector<S>(_n, e())) {}
 
     lazy_segtree(const vector<S>& a) {
         n = a.size();
@@ -39,7 +39,7 @@ struct lazy_segtree {
         lz[k] = id();
     }
 
-    int bit_ceil(int n) {
+    int bit_ceil(int _n) {
         int x = 1;
         while (x < n) x <<= 1;
         return x;

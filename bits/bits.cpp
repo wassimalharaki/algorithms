@@ -8,10 +8,11 @@ signed main() {
     //count ones
     __builtin_popcountll(x);
 
-    //index of highest one
+    //most significant bit
     63 - __builtin_clzll(x);
+    __lg(x);
 
-    //index of lowest one
+    //least significant bit
     __builtin_ctzll(x);
 
     return 0;

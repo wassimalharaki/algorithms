@@ -7,7 +7,7 @@ struct segtree_2d {
     int n, m, size_n, size_m, log_n, log_m;
     vector<vector<S>> d;
 
-    segtree_2d(int n, int m) : segtree_2d(vector(n, vector<S>(m, e()))) {}
+    segtree_2d(int _n, int _m) : segtree_2d(vector(_n, vector<S>(_m, e()))) {}
     
     segtree_2d(const vector<vector<S>>& a) {
         n = a.size(), m = a[0].size();
@@ -35,7 +35,7 @@ struct segtree_2d {
         d[i][j] = op(d[i << 1][j], d[(i << 1) + 1][j]);
     }
 
-    int bit_ceil(int n) {
+    int bit_ceil(int _n) {
         int x = 1;
         while (x < n) x <<= 1;
         return x;
