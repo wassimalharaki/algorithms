@@ -1,7 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define int long long
-#define nl '\n'
 #define v vector
 
 template <class E> struct csr {

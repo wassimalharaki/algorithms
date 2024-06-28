@@ -7,13 +7,21 @@ struct DSU {
     vector<int> p;
     int comp;
 
-    DSU(int n) { p.resize(n, -1); comp = n; }
+    DSU(int n) {
+        p.resize(n, -1); comp = n;
+    }
 
-    int find(int x) { return p[x] < 0 ? x : p[x] = find(p[x]); }
+    int find(int x) {
+        return p[x] < 0 ? x : p[x] = find(p[x]);
+    }
 
-    int size(int x) { return - p[find(x)]; }
+    int size(int x) {
+        return - p[find(x)];
+    }
 
-    bool same_set(int x, int y) { return find(x) == find(y); }
+    bool same_set(int x, int y) {
+        return find(x) == find(y);
+    }
 
     bool merge(int x, int y) {
         x = find(x); y = find(y);

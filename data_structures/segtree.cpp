@@ -18,7 +18,9 @@ struct segtree {
         for (int i = size - 1; i >= 1; i--) update(i);
     }
 
-    void update(int k) { d[k] = op(d[k << 1], d[(k << 1) + 1]); }
+    void update(int k) {
+        d[k] = op(d[k << 1], d[(k << 1) + 1]);
+    }
 
     int bit_ceil(int _n) {
         int x = 1;

@@ -7,12 +7,16 @@ struct segtree_2d {
     int n, m, size_n, size_m, log_n, log_m;
     vector<vector<S>> d;
 
-    segtree_2d(int _n, int _m) : segtree_2d(vector(_n, vector<S>(_m, e()))) {}
+    segtree_2d(int _n, int _m) :
+        segtree_2d(vector(_n, vector<S>(_m, e()))) {}
     
     segtree_2d(const vector<vector<S>>& a) {
-        n = a.size(), m = a[0].size();
-        size_n = bit_ceil(n), size_m = bit_ceil(m);
-        log_n = __builtin_ctz(size_n), log_m = __builtin_ctz(size_m);
+        n = a.size();
+        m = a[0].size();
+        size_n = bit_ceil(n);
+        size_m = bit_ceil(m);
+        log_n = __builtin_ctz(size_n);
+        log_m = __builtin_ctz(size_m);
         d.resize(size_n << 1, vector(size_m << 1, e()));
 
         for (int i = 0; i < n; i++) {

@@ -35,7 +35,7 @@ vector<array<int, 2>> prime_factors(int n) {
         while (n % x == 0) {
             n /= x;
             pfs.back()[1]++;
-        } 
+        }
     }
     if (n != 1) pfs.push_back({n, 1});
     

@@ -26,7 +26,9 @@ struct lazy_segtree {
         for (int i = size - 1; i >= 1; i--) update(i);
     }
 
-    void update(int k) { d[k] = op(d[k << 1], d[(k << 1) + 1]); }
+    void update(int k) {
+        d[k] = op(d[k << 1], d[(k << 1) + 1]);
+    }
 
     void all_apply(int k, F f) {
         d[k] = mapping(f, d[k], 1 << (log - __lg(k)));
