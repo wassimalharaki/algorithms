@@ -1,11 +1,7 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 template <class E> struct csr {
-    v<int> start;
-    v<E> elist;
-    csr(int n, const v<pair<int, E>>& edges)
+    vector<int> start;
+    vector<E> elist;
+    csr(int n, const vector<pair<int, E>>& edges)
         : start(n + 1), elist(edges.size()) {
         for (auto e : edges)
             start[e.first + 1]++;
@@ -24,7 +20,7 @@ struct scc_graph {
     struct edge {
         int to;
     };
-    v<pair<int, edge>> edges;
+    vector<pair<int, edge>> edges;
 
     scc_graph(int n) : _n(n) {}
 
@@ -32,10 +28,10 @@ struct scc_graph {
 
     void add_edge(int from, int to) { edges.push_back({from, {to}}); }
 
-    pair<int, v<int>> scc_ids() {
+    pair<int, vector<int>> scc_ids() {
         auto g = csr<edge>(_n, edges);
         int now_ord = 0, group_num = 0;
-        v<int> visited, low(_n), ord(_n, -1), ids(_n);
+        vector<int> visited, low(_n), ord(_n, -1), ids(_n);
         visited.reserve(_n);
 
         auto dfs = [&](int u, auto&& dfs) -> void {
@@ -69,14 +65,14 @@ struct scc_graph {
         return {group_num, ids};
     }
 
-    v<v<int>> scc() {
+    vector<vector<int>> scc() {
         auto ids = scc_ids();
 
         int group_num = ids.first;
-        v<int> counts(group_num);
+        vector<int> counts(group_num);
         for (auto x : ids.second) counts[x]++;
 
-        v<v<int>> groups(ids.first);
+        vector<vector<int>> groups(ids.first);
         for (int i = 0; i < group_num; i++)
             groups[i].reserve(counts[i]);
 
@@ -89,7 +85,7 @@ struct scc_graph {
 // O(V + E)
 struct two_sat {
     int _n;
-    v<bool> _answer;
+    vector<bool> _answer;
     scc_graph scc;
 
     two_sat() : _n(0), scc(0) {}
@@ -109,5 +105,5 @@ struct two_sat {
         return 1;
     }
     
-    v<bool> answer() { return _answer; }
+    vector<bool> answer() { return _answer; }
 };

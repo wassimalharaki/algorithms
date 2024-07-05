@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(V^2*E)
 template <class Cap> struct mf_graph {
     int n;

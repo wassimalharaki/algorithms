@@ -1,7 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define int long long
-
 mt19937_64 gen(random_device{}());
 uniform_int_distribution<int> dist(0, 1e9 + 7);
 const array<const int, 2> M{(int) 1e9 + 7, (int) 1e9 + 9};

@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(log(b))
 int binpow(int a, int b) {
     int res = 1;

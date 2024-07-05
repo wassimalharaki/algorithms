@@ -1,15 +1,10 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 using ai2 = array<int, 2>;
-
 // O(Elog(V))
-v<int> dijkstra(int src, v<v<ai2>>& adj) {
+vector<int> dijkstra(int src, vector<vector<ai2>>& adj) {
     int n = adj.size();
-    v<int> d(n, INT_MAX);
-    v<char> vis(n);
-    priority_queue<ai2, v<ai2>, greater<ai2>> pq;
+    vector<int> d(n, INT_MAX);
+    vector<char> vis(n);
+    priority_queue<ai2, vector<ai2>, greater<ai2>> pq;
 
     d[src] = 0;
     pq.push({0, src});

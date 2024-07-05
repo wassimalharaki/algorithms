@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(nlog(n)), O(1)
 template <class S, S (*op)(S, S), S (*e)()>
 struct sparse_table {

@@ -1,10 +1,6 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(VE)
-v<int> get_neg_cycle(int n, v<array<int, 3>>& edges) {
-    v<int> d(n), p(n, -1);
+vector<int> get_neg_cycle(int n, vector<array<int, 3>>& edges) {
+    vector<int> d(n), p(n, -1);
     int x;
     for (int i = 0; i < n; i++) {
         x = -1;
@@ -18,7 +14,7 @@ v<int> get_neg_cycle(int n, v<array<int, 3>>& edges) {
     if (x == -1) return {};
 
     for (int i = 0; i < n; i++, x = p[x]);
-    v<int> cycle{x};
+    vector<int> cycle{x};
     for (int u = p[x]; u != x; u = p[u])
         cycle.push_back(u);
     cycle.push_back(x);

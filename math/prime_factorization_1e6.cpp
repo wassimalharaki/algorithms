@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(N)
 const int N = 1e6 + 1;
 vector<int> spf, primes;

@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(log(n))
 template <class F, class S, S (*op)(S, S), S (*e)()>
 struct sparse_segtree {

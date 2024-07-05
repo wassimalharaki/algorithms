@@ -1,7 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(n), O(1)
 struct DSU {
     vector<int> p;
@@ -33,10 +29,10 @@ struct DSU {
 };
 
 // O(n)
-int kruskal(int n, v<array<int, 3>>& edges) {
+int kruskal(int n, vector<array<int, 3>>& edges) {
     sort(edges.begin(), edges.end());
 
-    // v<array<int, 3>> tree(n - 1, array<int, 3>(3));
+    // vector<array<int, 3>> tree(n - 1, array<int, 3>(3));
     DSU ds(n + 1);
     int cost = 0, j = 0;
     for (int i = 0; j < n - 1 and i < edges.size(); i++) {

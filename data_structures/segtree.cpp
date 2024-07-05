@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(n), O(log(n))
 template <class S, S (*op)(S, S), S (*e)()>
 struct segtree {

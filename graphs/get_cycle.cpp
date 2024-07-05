@@ -1,12 +1,8 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(V + E)
-v<int> get_cycle(v<v<int>>& adj) {
+vector<int> get_cycle(vector<vector<int>>& adj) {
     int n = adj.size(), l = -1, r = -1;
-    v<int> p(n, -1);
-    v<char> c(n);
+    vector<int> p(n, -1);
+    vector<char> c(n);
     
     auto dfs = [&](int u, auto&& dfs) -> bool {
         c[u] = 1;
@@ -30,7 +26,7 @@ v<int> get_cycle(v<v<int>>& adj) {
             break;
     if (r == -1) return {};
 
-    v<int> cycle{l};
+    vector<int> cycle{l};
     for (int u = r; u != l; u = p[u])
         cycle.push_back(u);
     cycle.push_back(l);

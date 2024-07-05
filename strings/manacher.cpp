@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(n)
 vector<int> manacher(string& t) {
     string s{'$'};

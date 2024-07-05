@@ -1,9 +1,5 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(E)
-v<int> euler_cycle(v<v<array<int, 2>>> adj, int src = 0) {
+vector<int> euler_cycle(vector<vector<array<int, 2>>> adj, int src = 0) {
     int m = 0;
     for (auto& a : adj) {
         if (a.size() & 1)
@@ -12,8 +8,8 @@ v<int> euler_cycle(v<v<array<int, 2>>> adj, int src = 0) {
     }
     m >>= 1;
 
-    v<char> vis(m);
-    v<int> path;
+    vector<char> vis(m);
+    vector<int> path;
     auto dfs = [&](int u, auto&& dfs) -> void {
         while (adj[u].size()) {
             auto [a, i] = adj[u].back();

@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(n * m)
 template <class S>
 struct prefix_2d {

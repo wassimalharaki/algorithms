@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // left, down, right, up
 // if either val is < 0, no intersection
 // if both vals are = 0, single point intersection

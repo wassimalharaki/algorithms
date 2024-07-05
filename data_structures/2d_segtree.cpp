@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(n^2), O(log^2(n))
 template <class S, S (*op)(S, S), S (*e)()>
 struct segtree_2d {

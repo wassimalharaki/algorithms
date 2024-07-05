@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(nlog(n))
 vector<int> suffix_array(string& s) {
     s.push_back('$');

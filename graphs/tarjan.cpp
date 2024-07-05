@@ -1,14 +1,10 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(V + E)
-v<int> comp, comps;
-void tarjan(v<v<int>>& adj) {
+vector<int> comp, comps;
+void tarjan(vector<vector<int>>& adj) {
     int n = adj.size(), curr = 0;
     comps.clear();
     comp.assign(n, -1);
-    v<int> disc(n), vis;
+    vector<int> disc(n), vis;
 
     auto dfs = [&](int u, auto&& dfs) -> int {
         int low = disc[u] = ++curr;

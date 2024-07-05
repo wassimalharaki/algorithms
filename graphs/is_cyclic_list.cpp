@@ -1,12 +1,8 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(V + E)
-bool is_cyclic(v<v<int>>& adj) {
+bool is_cyclic(vector<vector<int>>& adj) {
     int n = adj.size();
 
-    v<char> c(n);
+    vector<char> c(n);
     auto dfs = [&](int u, auto&& dfs) -> bool {
         c[u] = 1;
         for (int& i : adj[u])

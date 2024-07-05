@@ -1,12 +1,8 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(E)
-v<int> euler_path(v<v<int>> adj, int src, int dst) {
+vector<int> euler_path(vector<vector<int>> adj, int src, int dst) {
     int n = adj.size(), m = 0;
 
-    v<int> in(n), out(n);
+    vector<int> in(n), out(n);
     for (int i = 0; i < n; i++)
         for (auto& u : adj[i])
             in[u]++, out[i]++, m++;
@@ -18,7 +14,7 @@ v<int> euler_path(v<v<int>> adj, int src, int dst) {
         if (i != src and i != dst and in[i] != out[i])
             return {};
 
-    v<int> path;
+    vector<int> path;
     auto dfs = [&](int u, auto&& dfs) -> void {
         while (adj[u].size()) {
             int i = adj[u].back();

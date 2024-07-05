@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 using u64 = uint64_t;
 using u128 = __uint128_t;
 

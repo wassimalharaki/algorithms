@@ -1,17 +1,13 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(nlog(n)), O(1)
 struct LCA {
     using ai2 = array<int, 2>;
-    v<int> in;
-    v<v<ai2>> d;
+    vector<int> in;
+    vector<vector<ai2>> d;
 
-    LCA(v<v<int>>& adj, int root = 0) {
+    LCA(vector<vector<int>>& adj, int root = 0) {
         in.resize(adj.size());
 
-        v<ai2> path;
+        vector<ai2> path;
         auto dfs = [&](int u, int p, int h, auto&& dfs) -> void {
             in[u] = path.size();
             path.push_back({u, h});
@@ -30,9 +26,9 @@ struct LCA {
         return l[1] < r[1] ? l : r;
     }
 
-    void build(v<ai2>& a) {
+    void build(vector<ai2>& a) {
         int n = a.size(), k = 64 - __builtin_clzll(n);
-        d.resize(k, v<ai2>(n));
+        d.resize(k, vector<ai2>(n));
         copy(a.begin(), a.end(), d[0].begin());
 
         for (int i = 1; i <= k; i++)

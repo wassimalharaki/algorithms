@@ -1,10 +1,6 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(VE)
-v<int> bellman_ford(int src, int n, v<v<int>>& edges) {
-    v<int> d(n, INT_MAX);
+vector<int> bellman_ford(int src, int n, vector<vector<int>>& edges) {
+    vector<int> d(n, INT_MAX);
     d[src] = 0;
 
     for (int i = 0; i < n - 1; i++)

@@ -1,6 +1,3 @@
-#include<bits/stdc++.h>
-using namespace std;
-
 // O(log(min(a, b)))
 int gcd(int a, int b, int& x, int& y) {
     x = 1, y = 0;

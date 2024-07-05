@@ -1,9 +1,5 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(V^3)
-v<v<int>> floyd_warshall(v<v<int>> adj) {
+vector<vector<int>> floyd_warshall(vector<vector<int>> adj) {
     int n = adj.size();
     for (int k = 0; k < n; k++)
         for (int i = 0; i < n; i++)

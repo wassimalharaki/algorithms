@@ -1,12 +1,8 @@
-#include <bits/stdc++.h>
-using namespace std;
-#define v vector
-
 // O(V + E)
-v<int> topsort(v<v<int>>& adj) {
+vector<int> topsort(vector<vector<int>>& adj) {
     int n = adj.size();
-    v<char> vis(n);
-    v<int> order;
+    vector<char> vis(n);
+    vector<int> order;
 
     auto dfs = [&](int u, auto&& dfs) -> void {
         vis[u] = 1;

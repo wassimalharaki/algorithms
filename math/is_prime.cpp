@@ -1,6 +1,3 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 // O(sqrt(n))
 bool is_prime(int n) {
     if (n <= 1)
