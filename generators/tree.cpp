@@ -35,11 +35,14 @@ signed main() {
     int T = 1000;
     cout << T << nl;
     for (int t = 1; t <= T; t++) {
-        int n = 100;
+        int n = random(1, 10);
         cout << n << nl;
-        for (int i = 1; i <= n; i++) {
-            cout << random(1, 100) << " ";
-        }
-        cout << nl;
+
+        v<int> nodes(n);
+        iota(nodes.begin(), nodes.end(), 1ll);
+        shuffle(nodes);
+
+        for (int i = 1; i < n; i++)
+            cout << nodes[i] << " " << nodes[random(0, i - 1)] << nl;
     }
 }

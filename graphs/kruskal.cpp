@@ -1,10 +1,9 @@
 // O(n), O(1)
 struct DSU {
     vector<int> p;
-    int comp;
 
     DSU(int n) {
-        p.resize(n, -1); comp = n;
+        p.resize(n, -1);
     }
 
     int find(int x) {
@@ -24,16 +23,16 @@ struct DSU {
         if (x == y) return false;
         if (p[x] > p[y]) swap(x, y);
         p[x] += p[y]; p[y] = x;
-        comp--; return true;
+        return true;
     }
 };
 
-// O(n)
+// O(nlog(n))
 int kruskal(int n, vector<array<int, 3>>& edges) {
     sort(edges.begin(), edges.end());
 
-    // vector<array<int, 3>> tree(n - 1, array<int, 3>(3));
-    DSU ds(n + 1);
+    // vector<array<int, 3>> tree(n - 1);
+    DSU ds(n);
     int cost = 0, j = 0;
     for (int i = 0; j < n - 1 and i < edges.size(); i++) {
         int a = edges[i][1], b = edges[i][2];

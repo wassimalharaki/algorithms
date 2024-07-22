@@ -1,10 +1,9 @@
 // O(n), O(1)
 struct DSU {
     vector<int> p;
-    int comp;
 
     DSU(int n) {
-        p.resize(n, -1); comp = n;
+        p.resize(n, -1);
     }
 
     int find(int x) {
@@ -24,6 +23,6 @@ struct DSU {
         if (x == y) return false;
         if (p[x] > p[y]) swap(x, y);
         p[x] += p[y]; p[y] = x;
-        comp--; return true;
+        return true;
     }
 };
