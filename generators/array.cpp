@@ -19,12 +19,9 @@ int random(int a, int b) {
     return dist(gen);
 }
 
-int random_mod(int i) {
-    return random(0, 1e18) % i;
-}
-
 void shuffle(vector<int>& a) {
-    random_shuffle(a.begin(), a.end(), random_mod);
+    random_shuffle(a.begin(), a.end(),
+        [](int i) { return random(0, 1e18) % i; });
 }
 
 signed main() {
@@ -37,9 +34,8 @@ signed main() {
     for (int t = 1; t <= T; t++) {
         int n = random(1, 10);
         cout << n << nl;
-        for (int i = 1; i <= n; i++) {
+        for (int i = 1; i <= n; i++)
             cout << random(1, 100) << " ";
-        }
         cout << nl;
     }
 }

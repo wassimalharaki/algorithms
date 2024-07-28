@@ -6,10 +6,10 @@ vector<int> euler_path(vector<vector<int>> adj, int src, int dst) {
     for (int i = 0; i < n; i++)
         for (auto& u : adj[i])
             in[u]++, out[i]++, m++;
-    
+
     if (out[src] != in[src] + 1 or out[dst] != in[dst] - 1)
         return {};
-    
+
     for (int i = 0; i < n; i++)
         if (i != src and i != dst and in[i] != out[i])
             return {};

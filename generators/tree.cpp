@@ -4,13 +4,6 @@ using namespace std;
 #define nl '\n'
 #define v vector
 
-void time() {
-    auto start = chrono::high_resolution_clock::now();
-    auto end = chrono::high_resolution_clock::now();
-    auto duration = chrono::duration_cast<chrono::milliseconds>(end - start).count(); 
-    cout << "\n=====" << "\nUsed: " << duration << " ms\n";
-}
-
 mt19937_64 gen(random_device{}());
 uniform_int_distribution<int> dist(1, 1);
 
@@ -19,12 +12,9 @@ int random(int a, int b) {
     return dist(gen);
 }
 
-int random_mod(int i) {
-    return random(0, 1e18) % i;
-}
-
 void shuffle(vector<int>& a) {
-    random_shuffle(a.begin(), a.end(), random_mod);
+    random_shuffle(a.begin(), a.end(),
+        [](int i) { return random(0, 1e18) % i; });
 }
 
 signed main() {

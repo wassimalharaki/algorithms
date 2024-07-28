@@ -7,18 +7,17 @@ template <class Cap> struct mf_graph {
     };
     vector<pair<int, int>> pos;
     vector<vector<_edge>> g;
-    
-    mf_graph(int n) : n(n), g(n) {}
+
+    mf_graph(int _n) : n(_n), g(_n) {}
 
     int add_edge(int from, int to, Cap cap) {
-        int m = pos.size();
         pos.push_back({from, g[from].size()});
         int from_id = g[from].size();
         int to_id = g[to].size();
         if (from == to) to_id++;
         g[from].push_back(_edge{to, to_id, cap});
         g[to].push_back(_edge{from, from_id, 0});
-        return m;
+        return pos.size();
     }
 
     struct edge {
@@ -27,7 +26,6 @@ template <class Cap> struct mf_graph {
     };
 
     edge get_edge(int i) {
-        int m = pos.size();
         auto e = g[pos[i].first][pos[i].second];
         auto re = g[e.to][e.rev];
         return edge{pos[i].first, e.to, e.cap + re.cap, re.cap};
@@ -42,7 +40,6 @@ template <class Cap> struct mf_graph {
     }
 
     void change_edge(int i, Cap new_cap, Cap new_flow) {
-        int m = pos.size();
         auto& e = g[pos[i].first][pos[i].second];
         auto& re = g[e.to][e.rev];
         e.cap = new_cap - new_flow;
@@ -77,7 +74,7 @@ template <class Cap> struct mf_graph {
             if (v == s) return up;
             Cap res = 0;
             int level_v = level[v];
-            for (int& i = iter[v]; i < g[v].size(); i++) {
+            for (int& i = iter[v]; i < (int) g[v].size(); i++) {
                 _edge& e = g[v][i];
                 if (level_v <= level[e.to] || g[e.to][e.rev].cap == 0) continue;
                 Cap d = dfs(e.to, min(up - res, g[e.to][e.rev].cap), dfs);

@@ -1,6 +1,6 @@
-using ai2 = array<int, 2>;
 // O(Elog(V))
 vector<int> dijkstra(int src, vector<vector<ai2>>& adj) {
+    using ai2 = array<int, 2>;
     int n = adj.size();
     vector<int> d(n, INT_MAX);
     vector<char> vis(n);
