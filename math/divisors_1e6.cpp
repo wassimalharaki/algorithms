@@ -21,7 +21,7 @@ vector<int> gen_divisors(const vector<array<int, 2>>& pfs) {
     vector<int> divs{1};
 
     auto f = [&](int x, int i, auto&& f) -> void {
-        if (i >= pfs.size()) return;
+        if (i >= (int) pfs.size()) return;
         f(x, i + 1, f);
         for (int j = 0; j < pfs[i][1]; j++) {
             x *= pfs[i][0];
