@@ -42,9 +42,9 @@ struct scc_graph {
                 if (ord[to] == -1) {
                     dfs(to, dfs);
                     low[u] = min(low[u], low[to]);
-                } else {
-                    low[u] = min(low[u], ord[to]);
                 }
+                else
+                    low[u] = min(low[u], ord[to]);
             }
             if (low[u] == ord[u]) {
                 while (true) {

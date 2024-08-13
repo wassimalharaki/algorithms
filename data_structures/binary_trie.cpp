@@ -4,12 +4,12 @@ struct binary_trie {
     struct node {
         array<int, 2> c;
         int cnt = 0;
-        node(int l, int r) { c = {l, r}; }
+        node() { c.fill(-1); }
     };
     vector<node> d;
     
     int add_node() {
-        d.push_back(node(-1, -1));
+        d.push_back(node());
         return d.size() - 1;
     }
  

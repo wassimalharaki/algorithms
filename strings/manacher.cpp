@@ -1,7 +1,7 @@
 // O(n)
-vector<int> manacher(string& t) {
+vector<int> manacher(const string& t) {
     string s{'$'};
-    for(char& c: t) s += string{'#', c};
+    for(const char& c: t) s += string{'#', c};
     s += string{'#', '^'};
 
     int n = s.size() - 2, l = 1, r = 1;

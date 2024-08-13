@@ -1,5 +1,5 @@
 // O(n)
-vector<int> z_function(string& s) {
+vector<int> z_function(const string& s) {
     int n = s.size();
     vector<int> z(n);
 

@@ -1,7 +1,8 @@
-const int mod = 1e9 + 7;
 const int N = 1e6 + 1;
+const int mod = 1e9 + 7;
 int fact[N], inv_num[N], inv_fact[N];
 
+// O(N)
 void build() {
     fact[0] = fact[1] = 1;
     inv_num[0] = inv_num[1] = 1;
@@ -13,6 +14,7 @@ void build() {
     }
 }
 
+// O(1)
 int choose(int n, int r) {
     return fact[n] * inv_fact[r] % mod * inv_fact[n - r] % mod;
 }

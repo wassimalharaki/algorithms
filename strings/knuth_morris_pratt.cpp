@@ -1,5 +1,5 @@
 // O(n)
-vector<int> kmp(string& s) {
+vector<int> kmp(const string& s) {
     int n = s.size();
     vector<int> pi(n);
     for (int i = 1; i < n; i++) {
