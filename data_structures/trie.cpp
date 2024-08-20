@@ -4,7 +4,6 @@ struct trie {
     struct node {
         array<int, N> c;
         int cnt = 0, end = 0;
-        node() { c.fill(-1); }
     };
     vector<node> d;
 
@@ -18,12 +17,12 @@ struct trie {
     void insert(const string& s) {
         int n = s.size(), rt = 0;
         for (int i = 0; i < n; i++) {
-            if (d[rt].c[s[i] - id] == -1) 
+            if (not d[rt].c[s[i] - id])
                 d[rt].c[s[i] - id] = add_node();
             rt = d[rt].c[s[i] - id];
             d[rt].cnt++;
-            if (i + 1 == n) d[rt].end++;
         }
+        d[rt].end++;
     }
 
     void erase(const string& s) {
@@ -31,7 +30,7 @@ struct trie {
         for (int i = 0; i < n; i++) {
             rt = d[rt].c[s[i] - id];
             d[rt].cnt--;
-            if (i + 1 == n) d[rt].end--;
         }
+        d[rt].end--;
     }
 };

@@ -4,7 +4,6 @@ struct binary_trie {
     struct node {
         array<int, 2> c;
         int cnt = 0;
-        node() { c.fill(-1); }
     };
     vector<node> d;
     
@@ -19,7 +18,7 @@ struct binary_trie {
         int rt = 0;
         for (int i = N; i >= 0; i--) {
             bool b = (1ll << i) & x;
-            if (d[rt].c[b] == -1)
+            if (not d[rt].c[b])
                 d[rt].c[b] = add_node();
             rt = d[rt].c[b];
             d[rt].cnt++;
@@ -39,7 +38,7 @@ struct binary_trie {
         int rt = 0, ans = 0;
         for (int i = N; i >= 0; i--) {
             bool b = (1ll << i) & x;
-            if (d[rt].c[b] != -1 and d[d[rt].c[b]].cnt)
+            if (d[rt].c[b] and d[d[rt].c[b]].cnt)
                 rt = d[rt].c[b];
             else
                 ans += 1ll << i, rt = d[rt].c[!b];
@@ -51,7 +50,7 @@ struct binary_trie {
         int rt = 0, ans = 0;
         for (int i = N; i >= 0; i--) {
             bool b = !((1ll << i) & x);
-            if (d[rt].c[b] != -1 and d[d[rt].c[b]].cnt)
+            if (d[rt].c[b] and d[d[rt].c[b]].cnt)
                 ans += 1ll << i, rt = d[rt].c[b];
             else
                 rt = d[rt].c[!b];
