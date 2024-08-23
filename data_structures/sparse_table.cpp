@@ -4,7 +4,7 @@ struct sparse_table {
     vector<vector<S>> d;
 
     sparse_table(vector<S>& a) {
-        int n = a.size(), k = 64 - __builtin_clzll(n);
+        int n = a.size(), k = 1 + __lg(n);
         d.resize(k, vector<S>(n));
         copy(a.begin(), a.end(), d[0].begin());
 
@@ -15,7 +15,7 @@ struct sparse_table {
 
     S prod(int l, int r) {
         if (l == r) return e();
-        int i = 63 - __builtin_clzll(r - l);
+        int i = __lg(r - l);
         return op(d[i][l], d[i][r - (1 << i)]);
     }
 };

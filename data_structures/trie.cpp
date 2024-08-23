@@ -2,7 +2,7 @@
 template <int N, char id>
 struct trie {
     struct node {
-        array<int, N> c;
+        array<int, N> go;
         int cnt = 0, end = 0;
     };
     vector<node> d;
@@ -15,11 +15,11 @@ struct trie {
     trie() { add_node(); }
 
     void insert(const string& s) {
-        int n = s.size(), rt = 0;
-        for (int i = 0; i < n; i++) {
-            if (not d[rt].c[s[i] - id])
-                d[rt].c[s[i] - id] = add_node();
-            rt = d[rt].c[s[i] - id];
+        int rt = 0;
+        for (const char& c : s) {
+            if (not d[rt].go[c - id])
+                d[rt].go[c - id] = add_node();
+            rt = d[rt].go[c - id];
             d[rt].cnt++;
         }
         d[rt].end++;
@@ -27,8 +27,8 @@ struct trie {
 
     void erase(const string& s) {
         int n = s.size(), rt = 0;
-        for (int i = 0; i < n; i++) {
-            rt = d[rt].c[s[i] - id];
+        for (const char& c : s) {
+            rt = d[rt].go[c - id];
             d[rt].cnt--;
         }
         d[rt].end--;

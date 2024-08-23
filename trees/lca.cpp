@@ -27,7 +27,7 @@ struct LCA {
     }
 
     void build(vector<ai2>& a) {
-        int n = a.size(), k = 64 - __builtin_clzll(n);
+        int n = a.size(), k = 1 + __lg(n);
         d.resize(k, vector<ai2>(n));
         copy(a.begin(), a.end(), d[0].begin());
 
@@ -39,7 +39,7 @@ struct LCA {
     int prod(int a, int b) {
         int l = in[a], r = in[b];
         if (l > r) swap(l, r);
-        int i = 63 - __builtin_clzll(++r - l);
+        int i = __lg(++r - l);
         return op(d[i][l], d[i][r - (1 << i)])[0];
     }
 };

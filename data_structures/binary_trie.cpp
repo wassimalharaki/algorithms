@@ -2,7 +2,7 @@
 template <int N>
 struct binary_trie {
     struct node {
-        array<int, 2> c;
+        array<int, 2> go;
         int cnt = 0;
     };
     vector<node> d;
@@ -18,9 +18,9 @@ struct binary_trie {
         int rt = 0;
         for (int i = N; i >= 0; i--) {
             bool b = (1ll << i) & x;
-            if (not d[rt].c[b])
-                d[rt].c[b] = add_node();
-            rt = d[rt].c[b];
+            if (not d[rt].go[b])
+                d[rt].go[b] = add_node();
+            rt = d[rt].go[b];
             d[rt].cnt++;
         }
     }
@@ -29,7 +29,7 @@ struct binary_trie {
         int rt = 0;
         for (int i = N; i >= 0; i--) {
             bool b = (1ll << i) & x;
-            rt = d[rt].c[b];
+            rt = d[rt].go[b];
             d[rt].cnt--;
         }
     }
@@ -38,10 +38,10 @@ struct binary_trie {
         int rt = 0, ans = 0;
         for (int i = N; i >= 0; i--) {
             bool b = (1ll << i) & x;
-            if (d[rt].c[b] and d[d[rt].c[b]].cnt)
-                rt = d[rt].c[b];
+            if (d[rt].go[b] and d[d[rt].go[b]].cnt)
+                rt = d[rt].go[b];
             else
-                ans += 1ll << i, rt = d[rt].c[!b];
+                ans += 1ll << i, rt = d[rt].go[!b];
         }
         return ans;
     }
@@ -50,10 +50,10 @@ struct binary_trie {
         int rt = 0, ans = 0;
         for (int i = N; i >= 0; i--) {
             bool b = !((1ll << i) & x);
-            if (d[rt].c[b] and d[d[rt].c[b]].cnt)
-                ans += 1ll << i, rt = d[rt].c[b];
+            if (d[rt].go[b] and d[d[rt].go[b]].cnt)
+                ans += 1ll << i, rt = d[rt].go[b];
             else
-                rt = d[rt].c[!b];
+                rt = d[rt].go[!b];
         }
         return ans;
     }
