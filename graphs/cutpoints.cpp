@@ -1,4 +1,4 @@
-void get_cutpoints(vector<vector<int>>& adj) {
+vector<int> get_cutpoints(vector<vector<int>>& adj) {
     int n = adj.size(), t = 0;
     vector<char> vis;
     vector<int> tin, low, cutpoints;
@@ -27,4 +27,5 @@ void get_cutpoints(vector<vector<int>>& adj) {
 
     for (int i = 0; i < n; ++i)
         if (!vis[i]) dfs(i, -1, dfs);
+    return cutpoints;
 }

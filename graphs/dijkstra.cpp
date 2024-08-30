@@ -1,6 +1,6 @@
+using ai2 = array<int, 2>;
 // O(Elog(V))
 vector<int> dijkstra(int src, vector<vector<ai2>>& adj) {
-    using ai2 = array<int, 2>;
     int n = adj.size();
     vector<int> d(n, INT_MAX);
     vector<char> vis(n);
@@ -11,6 +11,7 @@ vector<int> dijkstra(int src, vector<vector<ai2>>& adj) {
 
     while (pq.size()) {
         auto [w, u] = pq.top();
+        pq.pop();
 
         if (vis[u]) continue;
         vis[u] = 1;

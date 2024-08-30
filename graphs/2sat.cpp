@@ -85,7 +85,7 @@ struct scc_graph {
 // O(V + E)
 struct two_sat {
     int _n;
-    vector<bool> _answer;
+    vector<char> _answer;
     scc_graph scc;
 
     two_sat() : _n(0), scc(0) {}
@@ -105,5 +105,5 @@ struct two_sat {
         return 1;
     }
     
-    vector<bool> answer() { return _answer; }
+    vector<char> answer() { return _answer; }
 };

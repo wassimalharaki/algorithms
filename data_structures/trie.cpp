@@ -26,7 +26,7 @@ struct trie {
     }
 
     void erase(const string& s) {
-        int n = s.size(), rt = 0;
+        int rt = 0;
         for (const char& c : s) {
             rt = d[rt].go[c - id];
             d[rt].cnt--;

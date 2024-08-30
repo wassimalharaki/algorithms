@@ -140,3 +140,49 @@ vector<int> suffix_array(const string& s) {
         s2[i] = s[i];
     return sa_is(s2, 255);
 }
+
+struct LCP {
+    vector<int> pos;
+    vector<vector<int>> d;
+
+    LCP(const string& s) {
+        int n = s.size();
+        pos.resize(n);
+        vector<int> p = suffix_array(s), lcp(n - 1);
+
+        for (int i = 0; i < n; i++)
+            pos[p[i]] = i;
+
+        int k = 0;
+        for (int i = 0; i < n; i++) {
+            if (pos[i] == n - 1) {
+                k = 0;
+                continue;
+            }
+
+            int j = p[pos[i] + 1];
+            while (i + k < n and j + k < n and s[i + k] == s[j + k])
+                k++;
+            lcp[pos[i]] = k ? k-- : k;
+        }
+
+        n = lcp.size(), k = 1 + (n ? __lg(n) : 0);
+        d.resize(k, vector<int>(n));
+        copy(lcp.begin(), lcp.end(), d[0].begin());
+
+        for (int i = 1; i <= k; i++)
+            for (int j = 0; j + (1 << i) <= n; j++)
+                d[i][j] = min(d[i - 1][j], d[i - 1][j + (1 << (i - 1))]);
+    }
+
+    int prod(int i, int j) {
+        if (i == j)
+            return (int) d[0].size() + 1 - i;
+
+        i = pos[i], j = pos[j];
+        if (i > j) swap(i, j);
+
+        int k = __lg(j - i);
+        return min(d[k][i], d[k][j - (1 << k)]);
+    }
+};

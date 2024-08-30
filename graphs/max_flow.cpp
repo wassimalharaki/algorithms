@@ -100,8 +100,8 @@ template <class Cap> struct mf_graph {
         return flow;
     }
 
-    vector<bool> min_cut(int s) {
-        vector<bool> visited(n);
+    vector<char> min_cut(int s) {
+        vector<char> visited(n);
         queue<int> q;
         q.push(s);
         while (!q.empty()) {
