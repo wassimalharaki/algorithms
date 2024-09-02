@@ -37,8 +37,8 @@ vector<int> gen_divisors(const vector<array<int, 2>>& pfs) {
 
 // O(log(n) + d(n^p))
 vector<int> divisors(int n, int p = 1) {
-    if (n == 1) return {1};
     if (primes.empty()) build();
+    if (n == 1) return {1};
 
     vector<array<int, 2>> pfs{{spf[n], p}};
     n /= spf[n];

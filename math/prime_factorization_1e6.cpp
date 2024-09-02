@@ -18,8 +18,8 @@ void build() {
 
 // O(log(n))
 vector<array<int, 2>> prime_factors(int n) {
-    if (n == 1) return {};
     if (primes.empty()) build();
+    if (n == 1) return {};
 
     vector<array<int, 2>> pfs{{spf[n], 1}};
     n /= spf[n];

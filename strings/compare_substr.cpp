@@ -61,7 +61,7 @@ struct compare_substr {
             return - prod(l2, r2, l1, r1);
 
         if (l1 == r1)
-            return l2 == r2 ? 0 : 1;
+            return l2 == r2 ? 0 : -1;
 
         if (r1 - l1 != r2 - l2) {
             int x = prod(l1, r1, l2, l2 + r1 - l1);

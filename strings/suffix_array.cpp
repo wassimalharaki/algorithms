@@ -46,7 +46,7 @@ vector<int> suffix_array(string& s) {
                 c[p[i - 1]],
                 c[(p[i - 1] + (1 << h)) % n]
             };
-            if (cur != prev) cls++;
+            if (curr != prev) cls++;
             cn[p[i]] = cls - 1;
         }
         c.swap(cn);
