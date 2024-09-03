@@ -10,8 +10,8 @@ struct segtree_2d {
     segtree_2d(const vector<vector<S>>& a) {
         n = a.size();
         m = a[0].size();
-        size_n = bit_ceil(n);
-        size_m = bit_ceil(m);
+        size_n = n <= 1 ? 1 : 1 << (1 + __lg(n - 1));
+        size_m = m <= 1 ? 1 : 1 << (1 + __lg(m - 1));
         log_n = __builtin_ctz(size_n);
         log_m = __builtin_ctz(size_m);
         d.resize(size_n << 1, vector(size_m << 1, e()));
@@ -34,12 +34,6 @@ struct segtree_2d {
 
     void update_outer(int i, int j) {
         d[i][j] = op(d[i << 1][j], d[(i << 1) + 1][j]);
-    }
-
-    int bit_ceil(int _n) {
-        int x = 1;
-        while (x < n) x <<= 1;
-        return x;
     }
 
     void set(int r, int c, S x) {

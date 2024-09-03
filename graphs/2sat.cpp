@@ -1,109 +1,56 @@
-template <class E> struct csr {
-    vector<int> start;
-    vector<E> elist;
-    csr(int n, const vector<pair<int, E>>& edges)
-        : start(n + 1), elist(edges.size()) {
-        for (auto e : edges)
-            start[e.first + 1]++;
-
-        for (int i = 1; i <= n; i++)
-            start[i] += start[i - 1];
-            
-        auto counter = start;
-        for (auto e : edges)
-            elist[counter[e.first]++] = e.second;
-    }
-};
-
-struct scc_graph {
-    int _n;
-    struct edge {
-        int to;
-    };
-    vector<pair<int, edge>> edges;
-
-    scc_graph(int n) : _n(n) {}
-
-    int num_vertices() { return _n; }
-
-    void add_edge(int from, int to) { edges.push_back({from, {to}}); }
-
-    pair<int, vector<int>> scc_ids() {
-        auto g = csr<edge>(_n, edges);
-        int now_ord = 0, group_num = 0;
-        vector<int> visited, low(_n), ord(_n, -1), ids(_n);
-        visited.reserve(_n);
-
-        auto dfs = [&](int u, auto&& dfs) -> void {
-            low[u] = ord[u] = now_ord++;
-            visited.push_back(u);
-            for (int i = g.start[u]; i < g.start[u + 1]; i++) {
-                auto to = g.elist[i].to;
-                if (ord[to] == -1) {
-                    dfs(to, dfs);
-                    low[u] = min(low[u], low[to]);
-                }
-                else
-                    low[u] = min(low[u], ord[to]);
-            }
-            if (low[u] == ord[u]) {
-                while (true) {
-                    int i = visited.back();
-                    visited.pop_back();
-                    ord[i] = _n;
-                    ids[i] = group_num;
-                    if (i == u) break;
-                }
-                group_num++;
-            }
-        };
-
-        for (int i = 0; i < _n; i++)
-            if (ord[i] == -1) dfs(i, dfs);
-        for (auto& x : ids)
-            x = group_num - 1 - x;
-        return {group_num, ids};
-    }
-
-    vector<vector<int>> scc() {
-        auto ids = scc_ids();
-
-        int group_num = ids.first;
-        vector<int> counts(group_num);
-        for (auto x : ids.second) counts[x]++;
-
-        vector<vector<int>> groups(ids.first);
-        for (int i = 0; i < group_num; i++)
-            groups[i].reserve(counts[i]);
-
-        for (int i = 0; i < _n; i++)
-            groups[ids.second[i]].push_back(i);
-        return groups;
-    }
-};
-
 // O(V + E)
 struct two_sat {
-    int _n;
-    vector<char> _answer;
-    scc_graph scc;
+    int n;
+    vector<bool> ans;
+    vector<vector<int>> adj;
 
-    two_sat() : _n(0), scc(0) {}
-    two_sat(int n) : _n(n), _answer(n), scc(2 * n) {}
+    two_sat(int _n) {
+        n = _n;
+        ans.resize(_n);
+        adj.resize(2 * _n);
+    }
 
     void add_clause(int i, bool f, int j, bool g) {
-        scc.add_edge(2 * i + (f ? 0 : 1), 2 * j + (g ? 1 : 0));
-        scc.add_edge(2 * j + (g ? 0 : 1), 2 * i + (f ? 1 : 0));
+        adj[2 * i + !f].push_back(2 * j + g);
+        adj[2 * j + !g].push_back(2 * i + f);
+    }
+
+    vector<int> tarjan() {
+        int curr = 0, grp_id = 0;
+        vector<int> disc(2 * n), id(2 * n, -1), vis;
+
+        auto dfs = [&](int u, auto&& dfs) -> int {
+            int low = disc[u] = ++curr;
+            vis.push_back(u);
+
+            for (int& i : adj[u])
+                if (id[i] == -1)
+                    low = min(low, disc[i] ?: dfs(i, dfs));
+
+            if (low == disc[u]) {
+                for (int i = -1; i != u;) {
+                    i = vis.back();
+                    id[i] = grp_id;
+                    vis.pop_back();
+                }
+                grp_id++;
+            }
+            return low;
+        };
+
+        for (int i = 0; i < 2 * n; i++)
+            if (!disc[i]) dfs(i, dfs);
+        return id;
     }
 
     bool satisfiable() {
-        auto id = scc.scc_ids().second;
-        for (int i = 0; i < _n; i++) {
+        vector<int> id = tarjan();
+        for (int i = 0; i < n; i++) {
             if (id[2 * i] == id[2 * i + 1]) return 0;
-            _answer[i] = id[2 * i] < id[2 * i + 1];
+            ans[i] = id[2 * i] > id[2 * i + 1];
         }
         return 1;
     }
-    
-    vector<char> answer() { return _answer; }
+
+    vector<bool> answer() { return ans; }
 };

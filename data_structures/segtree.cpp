@@ -8,7 +8,7 @@ struct segtree {
     
     segtree(const vector<S>& a) {
         n = a.size();
-        size = bit_ceil(n);
+        size = n <= 1 ? 1 : 1 << (1 + __lg(n - 1));
         log = __builtin_ctz(size);
         d.resize(size << 1, e());
         for (int i = 0; i < n; i++) d[size + i] = a[i];
@@ -17,12 +17,6 @@ struct segtree {
 
     void update(int k) {
         d[k] = op(d[k << 1], d[(k << 1) + 1]);
-    }
-
-    int bit_ceil(int _n) {
-        int x = 1;
-        while (x < n) x <<= 1;
-        return x;
     }
 
     void set(int p, S x) {

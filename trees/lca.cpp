@@ -27,7 +27,7 @@ struct LCA {
     }
 
     void build(vector<ai2>& a) {
-        int n = a.size(), k = 1 + __lg(n);
+        int n = a.size(), k = 1 + (n ? __lg(n) : 0);
         d.resize(k, vector<ai2>(n));
         copy(a.begin(), a.end(), d[0].begin());
 
