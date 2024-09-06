@@ -4,7 +4,7 @@ struct compare_substr {
 
     compare_substr(string& s) {
         s.push_back('$');
-        int n = s.size(), k = 2 + __lg(n - 1);
+        int n = s.size(), k = 2 + (n == 1 ? 0 : __lg(n - 1));
         const int alph = 256;
         vector<int> p(n), cnt(max(alph, n));
         c.resize(k, vector<int>(n));
