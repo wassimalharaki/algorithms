@@ -1,6 +1,6 @@
 using ai2 = array<int, 2>;
 // O(Elog(V))
-vector<int> dijkstra(int src, vector<vector<ai2>>& adj) {
+vector<int> dijkstra(int src, const vector<vector<ai2>>& adj) {
     int n = adj.size();
     vector<int> d(n, INT_MAX);
     vector<char> vis(n);
@@ -16,10 +16,10 @@ vector<int> dijkstra(int src, vector<vector<ai2>>& adj) {
         if (vis[u]) continue;
         vis[u] = 1;
 
-        for (ai2& i : adj[u])
-            if (w + i[1] < d[i[0]]) {
-                d[i[0]] = w + i[1];
-                pq.push({d[i[0]], i[0]});
+        for (const auto& [i, c] : adj[u])
+            if (w + c < d[i]) {
+                d[i] = w + c;
+                pq.push({d[i], i});
             }
     }
     return d;

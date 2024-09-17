@@ -1,5 +1,5 @@
 // O(V^2)
-bool is_cyclic(vector<vector<int>>& adj) {
+bool is_cyclic(const vector<vector<int>>& adj) {
     int n = adj.size();
 
     vector<char> c(n);

@@ -1,15 +1,17 @@
 // O(nlog(n)), O(1)
 struct LCA {
     using ai2 = array<int, 2>;
-    vector<int> in;
+    vector<int> in, dep;
     vector<vector<ai2>> d;
 
     LCA(const vector<vector<int>>& adj, int root = 0) {
         in.resize(adj.size());
+        dep.resize(adj.size());
 
         vector<ai2> path;
         auto dfs = [&](int u, int p, int h, auto&& dfs) -> void {
             in[u] = path.size();
+            dep[u] = h;
             path.push_back({u, h});
 
             for (const int& i : adj[u])
@@ -41,5 +43,9 @@ struct LCA {
         if (l > r) swap(l, r);
         int i = __lg(++r - l);
         return op(d[i][l], d[i][r - (1 << i)])[0];
+    }
+
+    int dist(int a, int b) {
+        return dep[a] + dep[b] - 2 * dep[prod(a, b)];
     }
 };

@@ -34,7 +34,7 @@ int kruskal(int n, vector<array<int, 3>>& edges) {
     // vector<array<int, 3>> tree(n - 1);
     DSU ds(n);
     int cost = 0, j = 0;
-    for (int i = 0; j < n - 1 and i < edges.size(); i++) {
+    for (int i = 0; j < n - 1 and i < (int) edges.size(); i++) {
         int a = edges[i][1], b = edges[i][2];
         if (not ds.merge(a, b)) continue;
         // tree[j][1] = a; tree[j][2] = b; tree[j][0] = edges[i][0];

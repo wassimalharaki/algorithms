@@ -1,12 +1,12 @@
 // O(V + E)
-vector<int> get_cycle(vector<vector<int>>& adj) {
+vector<int> get_cycle(const vector<vector<int>>& adj) {
     int n = adj.size(), l = -1, r = -1;
     vector<int> p(n, -1);
     vector<char> c(n);
     
     auto dfs = [&](int u, auto&& dfs) -> bool {
         c[u] = 1;
-        for (int& i : adj[u])
+        for (const int& i : adj[u])
             if (c[i] == 0) {
                 p[i] = u;
                 if (dfs(i, dfs))

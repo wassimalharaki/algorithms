@@ -3,7 +3,7 @@ template <class S, S (*op)(S, S), S (*e)()>
 struct sparse_table {
     vector<vector<S>> d;
 
-    sparse_table(vector<S>& a) {
+    sparse_table(const vector<S>& a) {
         int n = a.size(), k = 1 + (n ? __lg(n) : 0);
         d.resize(k, vector<S>(n));
         copy(a.begin(), a.end(), d[0].begin());

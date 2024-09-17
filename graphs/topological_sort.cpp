@@ -1,12 +1,12 @@
 // O(V + E)
-vector<int> topsort(vector<vector<int>>& adj) {
+vector<int> topsort(const vector<vector<int>>& adj) {
     int n = adj.size();
     vector<char> vis(n);
     vector<int> order;
 
     auto dfs = [&](int u, auto&& dfs) -> void {
         vis[u] = 1;
-        for (int& i : adj[u])
+        for (const int& i : adj[u])
             if (not vis[i])
                 dfs(i, dfs);
         order.push_back(u);

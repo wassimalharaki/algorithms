@@ -3,7 +3,7 @@ template <class S>
 struct prefix_2d {
     vector<vector<S>> d;
 
-    prefix_2d(vector<vector<S>>& a) {
+    prefix_2d(const vector<vector<S>>& a) {
         int n = a.size(), m = a[0].size();
         d.resize(n + 1, vector<S>(m + 1));
 

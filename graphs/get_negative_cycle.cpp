@@ -1,14 +1,14 @@
 // O(VE)
-vector<int> get_neg_cycle(int n, vector<array<int, 3>>& edges) {
+vector<int> get_neg_cycle(int n, const vector<array<int, 3>>& edges) {
     vector<int> d(n), p(n, -1);
     int x;
     for (int i = 0; i < n; i++) {
         x = -1;
-        for (array<int, 3>& j : edges)
-            if (d[j[0]] + j[2] < d[j[1]]) {
-                x = j[1];
-                d[x] = d[j[0]] + j[2];
-                p[x] = j[0];
+        for (const auto& [a, b, c] : edges)
+            if (d[a] + c < d[b]) {
+                x = b;
+                d[x] = d[a] + c;
+                p[x] = a;
             }
     }
     if (x == -1) return {};

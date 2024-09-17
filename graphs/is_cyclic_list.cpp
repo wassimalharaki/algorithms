@@ -1,11 +1,11 @@
 // O(V + E)
-bool is_cyclic(vector<vector<int>>& adj) {
+bool is_cyclic(const vector<vector<int>>& adj) {
     int n = adj.size();
 
     vector<char> c(n);
     auto dfs = [&](int u, auto&& dfs) -> bool {
         c[u] = 1;
-        for (int& i : adj[u])
+        for (const int& i : adj[u])
             if ((c[i] == 0 and dfs(i, dfs)) or c[i] == 1)
                 return 1;
         c[u] = 2;

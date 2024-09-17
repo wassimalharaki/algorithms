@@ -1,6 +1,6 @@
 // O(V + E)
 vector<int> comp, comps;
-void tarjan(vector<vector<int>>& adj) {
+void tarjan(const vector<vector<int>>& adj) {
     int n = adj.size(), curr = 0;
     comps.clear();
     comp.assign(n, -1);
@@ -10,7 +10,7 @@ void tarjan(vector<vector<int>>& adj) {
         int low = disc[u] = ++curr;
         vis.push_back(u);
 
-        for (int& i : adj[u])
+        for (const int& i : adj[u])
             if (comp[i] == -1)
                 low = min(low, disc[i] ?: dfs(i, dfs));
 
@@ -26,6 +26,6 @@ void tarjan(vector<vector<int>>& adj) {
     };
 
     for (int i = 0; i < n; i++)
-        if (!disc[i]) dfs(i, dfs);
+        if (not disc[i]) dfs(i, dfs);
     reverse(comps.begin(), comps.end());
 }
