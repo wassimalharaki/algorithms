@@ -10,13 +10,13 @@ vector<int> euler_cycle(vector<vector<array<int, 2>>> adj, int src = 0) {
 
     vector<char> vis(m);
     vector<int> path;
-    auto dfs = [&](int u, auto&& dfs) -> void {
+    auto dfs = [&](int u, auto&& self) -> void {
         while (adj[u].size()) {
             auto [a, i] = adj[u].back();
             adj[u].pop_back();
             if (not vis[i]) {
                 vis[i] = 1;
-                dfs(a, dfs);
+                self(a, self);
             }
         }
         path.push_back(u);

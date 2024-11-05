@@ -40,15 +40,9 @@ struct dc_graph {
 
     dc_graph(int _n, int _q) {
         t = 0, n = _n;
-        size = bit_ceil(_q);
+        size = q <= 1 ? 1 : 1 << (1 + __lg(q - 1));;
         q.resize(size);
         d.resize(size << 1);
-    }
-
-    int bit_ceil(int _n) {
-        int x = 1;
-        while (x < _n) x <<= 1;
-        return x;
     }
 
     void add_edge(int a, int b) {
@@ -86,13 +80,13 @@ struct dc_graph {
 
         DSU ds(n);
         vector<int> ans;
-        auto dfs = [&](int i, auto&& dfs) -> void {
+        auto dfs = [&](int i, auto&& self) -> void {
             for (auto& [a, b] : d[i])
                 ds.merge(a, b);
 
             if (i < size) {
-                dfs(i << 1, dfs);
-                dfs((i << 1) + 1, dfs);
+                self(i << 1, self);
+                self((i << 1) + 1, self);
             }
             else if (q[i - size])
                 ans.push_back(ds.comp);

@@ -10,7 +10,7 @@ struct block_cut_tree {
         vector<vector<int>> comps;
         vector<int> disc(n), low(n), vis;
 
-        auto dfs = [&](int u, int p, auto&& dfs) -> void {
+        auto dfs = [&](int u, int p, auto&& self) -> void {
             disc[u] = low[u] = ++curr;
             vis.push_back(u);
 
@@ -21,7 +21,7 @@ struct block_cut_tree {
                     continue;
                 }
 
-                dfs(i, u, dfs);
+                self(i, u, self);
                 low[u] = min(low[u], low[i]);
                 if (low[i] >= disc[u]) {
                     is_cutpoint[u] = disc[u] > 1 || disc[i] > 2;

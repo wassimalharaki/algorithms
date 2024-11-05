@@ -1,8 +1,7 @@
 // O(N)
 const int N = 1e6 + 1;
-vector<int> spf, primes;
+vector<int> spf(N), primes;
 void build() {
-    spf.resize(N);
     for (int i = 2; i < N; i++) {
         if (spf[i] == 0) {
             spf[i] = i;

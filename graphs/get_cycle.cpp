@@ -4,12 +4,12 @@ vector<int> get_cycle(const vector<vector<int>>& adj) {
     vector<int> p(n, -1);
     vector<char> c(n);
     
-    auto dfs = [&](int u, auto&& dfs) -> bool {
+    auto dfs = [&](int u, auto&& self) -> bool {
         c[u] = 1;
         for (const int& i : adj[u])
             if (c[i] == 0) {
                 p[i] = u;
-                if (dfs(i, dfs))
+                if (self(i, self))
                     return 1;
             }
             else if (c[i] == 1) {

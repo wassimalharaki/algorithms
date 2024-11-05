@@ -4,7 +4,7 @@ vector<array<int, 2>> get_bridges(const vector<vector<int>>& adj) {
     vector<array<int, 2>> bridges;
     vector<int> tin(n, -1), low(n, -1);
 
-    auto dfs = [&](int u, int p, auto&& dfs) -> void {
+    auto dfs = [&](int u, int p, auto&& self) -> void {
         vis[u] = 1;
         tin[u] = low[u] = t++;
         
@@ -15,7 +15,7 @@ vector<array<int, 2>> get_bridges(const vector<vector<int>>& adj) {
             else if (vis[i])
                 low[u] = min(low[u], tin[i]);
             else {
-                dfs(i, u, dfs);
+                self(i, u, self);
                 low[u] = min(low[u], low[i]);
                 if (low[i] > tin[u])
                     bridges.push_back({u, i});

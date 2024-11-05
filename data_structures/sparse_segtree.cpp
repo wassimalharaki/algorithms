@@ -6,24 +6,23 @@ struct sparse_segtree {
         S x = e();
         int lc = 0, rc = 0, p;
     };
-    const int max_nodes = 1e7; // >=228mb
     vector<node> d;
-    int k = 0;
 
     int add_node(F l, F r, int p) {
-        tie(d[k].l, d[k].r, d[k].p) = {l, r, p};
-        return k++;
+        d.push_back(node());
+        tie(d.back().l, d.back().r, d.back().p) = {l, r, p};
+        return d.size() - 1;
     }
 
     int get_lc(int i) {
         if (!d[i].lc)
-            d[i].lc = add_node(d[i].l, d[i].l + d[i].r >> 1, i);
+            d[i].lc = add_node(d[i].l, (d[i].l + d[i].r) >> 1, i);
         return d[i].lc;
     }
 
     int get_rc(int i) {
         if (!d[i].rc)
-            d[i].rc = add_node(d[i].l + d[i].r >> 1, d[i].r, i);
+            d[i].rc = add_node((d[i].l + d[i].r) >> 1, d[i].r, i);
         return d[i].rc;
     }
 
@@ -31,16 +30,15 @@ struct sparse_segtree {
         d[i].x = op(d[d[i].lc].x, d[d[i].rc].x);
     }
 
-    sparse_segtree(F n) {
-        d.resize(max_nodes);
+    sparse_segtree(F l, F r) {
         add_node((F) -1, (F) -1, -1);
-        add_node((F) 0, n, 0);
+        add_node(l, r, 0);
     }
 
     S get(F i) {
         int j = 1;
         while (j and (i != d[j].l or d[j].l + 1 != d[j].r))
-            j = i < d[j].l + d[j].r >> 1 ?
+            j = i < (d[j].l + d[j].r) >> 1 ?
                 d[j].lc :
                 d[j].rc;
         return d[j].x;
@@ -49,7 +47,7 @@ struct sparse_segtree {
     void set(F i, S x) {
         int j = 1;
         while (d[j].l != i or d[j].l + 1 != d[j].r)
-            j = i < d[j].l + d[j].r >> 1 ?
+            j = i < (d[j].l + d[j].r) >> 1 ?
                 get_lc(j) :
                 get_rc(j);
 
@@ -64,7 +62,7 @@ struct sparse_segtree {
         int j = 1;
         d[j].x = op(d[j].x, x);
         while (d[j].l != i or d[j].l + 1 != d[j].r) {
-            j = i < d[j].l + d[j].r >> 1 ?
+            j = i < (d[j].l + d[j].r) >> 1 ?
                 get_lc(j) :
                 get_rc(j);
             d[j].x = op(d[j].x, x);

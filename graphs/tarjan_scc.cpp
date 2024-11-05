@@ -6,13 +6,13 @@ void tarjan(const vector<vector<int>>& adj) {
     comp.assign(n, -1);
     vector<int> disc(n), vis;
 
-    auto dfs = [&](int u, auto&& dfs) -> int {
+    auto dfs = [&](int u, auto&& self) -> int {
         int low = disc[u] = ++curr;
         vis.push_back(u);
 
         for (const int& i : adj[u])
             if (comp[i] == -1)
-                low = min(low, disc[i] ?: dfs(i, dfs));
+                low = min(low, disc[i] ?: self(i, self));
 
         if (low == disc[u]) {
             comps.push_back(u);

@@ -59,7 +59,7 @@ template <class Cap> struct mf_graph {
             level[s] = 0;
             while (q.size()) q.pop();
             q.push(s);
-            while (!q.empty()) {
+            while (not q.empty()) {
                 int v = q.front();
                 q.pop();
                 for (auto e : g[v]) {
@@ -70,14 +70,14 @@ template <class Cap> struct mf_graph {
                 }
             }
         };
-        auto dfs = [&](int v, Cap up, auto&& dfs) {
+        auto dfs = [&](int v, Cap up, auto&& self) {
             if (v == s) return up;
             Cap res = 0;
             int level_v = level[v];
             for (int& i = iter[v]; i < (int) g[v].size(); i++) {
                 _edge& e = g[v][i];
                 if (level_v <= level[e.to] || g[e.to][e.rev].cap == 0) continue;
-                Cap d = dfs(e.to, min(up - res, g[e.to][e.rev].cap), dfs);
+                Cap d = self(e.to, min(up - res, g[e.to][e.rev].cap), self);
                 if (d <= 0) continue;
                 g[v][i].cap += d;
                 g[e.to][e.rev].cap -= d;
@@ -94,7 +94,7 @@ template <class Cap> struct mf_graph {
             if (level[t] == -1) break;
             fill(iter.begin(), iter.end(), 0);
             Cap f = dfs(t, flow_limit - flow, dfs);
-            if (!f) break;
+            if (not f) break;
             flow += f;
         }
         return flow;
@@ -104,12 +104,12 @@ template <class Cap> struct mf_graph {
         vector<char> visited(n);
         queue<int> q;
         q.push(s);
-        while (!q.empty()) {
+        while (not q.empty()) {
             int p = q.front();
             q.pop();
             visited[p] = true;
             for (auto e : g[p]) {
-                if (e.cap && !visited[e.to]) {
+                if (e.cap and not visited[e.to]) {
                     visited[e.to] = true;
                     q.push(e.to);
                 }

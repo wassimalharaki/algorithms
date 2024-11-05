@@ -4,11 +4,11 @@ vector<int> topsort(const vector<vector<int>>& adj) {
     vector<char> vis(n);
     vector<int> order;
 
-    auto dfs = [&](int u, auto&& dfs) -> void {
+    auto dfs = [&](int u, auto&& self) -> void {
         vis[u] = 1;
         for (const int& i : adj[u])
             if (not vis[i])
-                dfs(i, dfs);
+                self(i, self);
         order.push_back(u);
     };
 

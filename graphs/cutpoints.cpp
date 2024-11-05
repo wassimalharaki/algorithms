@@ -3,7 +3,7 @@ vector<int> get_cutpoints(const vector<vector<int>>& adj) {
     vector<char> vis(n), is_cutpoint(n);
     vector<int> tin(n), low(n);
 
-    auto dfs = [&](int u, int p, auto&& dfs) -> void {
+    auto dfs = [&](int u, int p, auto&& self) -> void {
         vis[u] = 1;
         tin[u] = low[u] = t++;
 
@@ -14,7 +14,7 @@ vector<int> get_cutpoints(const vector<vector<int>>& adj) {
             else if (vis[i])
                 low[u] = min(low[u], tin[i]);
             else {
-                dfs(i, u, dfs);
+                self(i, u, self);
                 low[u] = min(low[u], low[i]);
                 if (low[i] >= tin[u] and p != -1)
                     is_cutpoint[u] = 1;

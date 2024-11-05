@@ -19,13 +19,13 @@ struct two_sat {
         int curr = 0, grp_id = 0;
         vector<int> disc(2 * n), id(2 * n, -1), vis;
 
-        auto dfs = [&](int u, auto&& dfs) -> int {
+        auto dfs = [&](int u, auto&& self) -> int {
             int low = disc[u] = ++curr;
             vis.push_back(u);
 
             for (int& i : adj[u])
                 if (id[i] == -1)
-                    low = min(low, disc[i] ?: dfs(i, dfs));
+                    low = min(low, disc[i] ?: self(i, self));
 
             if (low == disc[u]) {
                 for (int i = -1; i != u;) {

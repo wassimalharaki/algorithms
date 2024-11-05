@@ -9,18 +9,18 @@ struct LCA {
         dep.resize(adj.size());
 
         vector<ai2> path;
-        auto dfs = [&](int u, int p, int h, auto&& dfs) -> void {
+        auto dfs = [&](int u, int p, auto&& self) -> void {
             in[u] = path.size();
-            dep[u] = h;
-            path.push_back({u, h});
+            dep[u] = p == -1 ? 0 : dep[p] + 1;
+            path.push_back({u, dep[u]});
 
             for (const int& i : adj[u])
                 if (i != p) {
-                    dfs(i, u, h + 1, dfs);
-                    path.push_back({u, h});
+                    self(i, u, self);
+                    path.push_back({u, dep[u]});
                 }
         };
-        dfs(root, -1, 0, dfs);
+        dfs(root, -1, dfs);
         build(path);
     }
 

@@ -15,11 +15,11 @@ vector<int> euler_path(vector<vector<int>> adj, int src, int dst) {
             return {};
 
     vector<int> path;
-    auto dfs = [&](int u, auto&& dfs) -> void {
+    auto dfs = [&](int u, auto&& self) -> void {
         while (adj[u].size()) {
             int i = adj[u].back();
             adj[u].pop_back();
-            dfs(i, dfs);
+            self(i, self);
         }
         path.push_back(u);
     };
