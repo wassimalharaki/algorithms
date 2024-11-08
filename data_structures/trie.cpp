@@ -1,4 +1,4 @@
-// O(n)
+// O(n * N)
 template <int N, char id>
 struct trie {
     struct node {

@@ -29,7 +29,7 @@ signed main() {
         cout << n << nl;
 
         v<int> nodes(n);
-        iota(nodes.begin(), nodes.end(), 1ll);
+        iota(nodes.begin(), nodes.end(), 1);
         shuffle(nodes);
 
         for (int i = 1; i < n; i++)

@@ -1,5 +1,6 @@
 // O(n^2)
 // dp[i][j] = min(i <= k < j) (dp[i][k] + dp[k + 1][j] + C(i, j))
+// C(a, c) + C(b, d) <= C(a, d) + C(b, c)
 int knuth(int n, function<int(int, int)> cost) {
     vector dp(n, vector<int>(n)), opt(n, vector<int>(n));
 

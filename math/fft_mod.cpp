@@ -31,6 +31,7 @@ void fft(vector<cd>& a) {
             }
 }
 
+const int mod = 1e9 + 7;
 vector<int> mutliply(const vector<int> &a, const vector<int> &b) {
     if (a.empty() or b.empty()) return {};
 

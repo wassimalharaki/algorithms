@@ -25,11 +25,11 @@ struct segtree {
         for (int i = 1; i <= log; i++) update(p >> i);
     }
 
-    S get(int p) const {
+    S get(int p) {
         return d[p + size];
     }
 
-    S prod(int l, int r) const {
+    S prod(int l, int r) {
         S sml = e(), smr = e();
         l += size;
         r += size;
@@ -43,5 +43,5 @@ struct segtree {
         return op(sml, smr);
     }
 
-    S all_prod() const { return d[1]; }
+    S all_prod() { return d[1]; }
 };

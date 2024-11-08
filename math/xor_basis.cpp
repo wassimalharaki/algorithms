@@ -1,4 +1,4 @@
-template <typename S, int N>
+template <class S, int N>
 struct basis {
     array<S, N> a;
     int n;

@@ -11,9 +11,8 @@ struct csr {
         for (int i = 1; i <= n; i++)
             start[i] += start[i - 1];
 
-        auto counter = start;
         for (auto e : edges)
-            elist[counter[e.first]++] = e.second;
+            elist[start[e.first]++] = e.second;
     }
 };
 
@@ -178,10 +177,8 @@ struct mcf_graph {
         }();
 
         auto result = slope(g, s, t, flow_limit);
-        for (int i = 0; i < m; i++) {
-            auto e = g.elist[edge_idx[i]];
-            _edges[i].flow = _edges[i].cap - e.cap;
-        }
+        for (int i = 0; i < m; i++)
+            _edges[i].flow = _edges[i].cap - g.elist[edge_idx[i]].cap;
         return result;
     }
 };

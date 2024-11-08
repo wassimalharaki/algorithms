@@ -12,11 +12,6 @@ int random(int a, int b) {
     return dist(gen);
 }
 
-void shuffle(vector<int>& a) {
-    random_shuffle(a.begin(), a.end(),
-        [](int i) { return random(0, 1e18) % i; });
-}
-
 signed main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
@@ -25,7 +20,7 @@ signed main() {
     int T = 1000;
     cout << T << nl;
     for (int t = 1; t <= T; t++) {
-        int n = random(1, 10), m = random(1, n * (n - 1) / 2);
+        int n = random(2, 10), m = random(1, n * (n - 1) / 2);
         cout << n << " " << m << nl;
         for (int i = 0; i < m; i++) {
             cout << random(1, n) << " " << random(1, n) << nl;

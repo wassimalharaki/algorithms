@@ -5,7 +5,7 @@ struct line {
     int operator()(int x) const { return a * x + b; }
 };
 
-// O(logn)
+// O(log(n))
 // dp[i] = max(a[j] * x[i] + b[j])
 struct dynamic_cht : multiset<line, less<>> {
     static const int inf = LLONG_MAX;

@@ -32,6 +32,7 @@ struct DSU {
     }
 };
 
+// O(qlog^2(q))
 struct dc_graph {
     int n, size, t;
     vector<char> q;
