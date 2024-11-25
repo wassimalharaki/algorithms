@@ -1,3 +1,4 @@
+// O(n), O(log(n))
 struct LCA {
     struct node { int d, jump, p; };
     vector<node> go;

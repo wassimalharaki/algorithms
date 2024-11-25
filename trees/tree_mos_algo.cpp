@@ -75,23 +75,18 @@ struct tree_mo {
         q.push_back({a, b, m++, -1, -1});
     }
 
-    vector<F> solve(const vector<vector<int>>& adj, const vector<S>& _a) {
+    vector<F> solve(const vector<vector<int>>& adj, const vector<S>& a) {
         int n = adj.size();
         LCA lca(adj);
-        vector<array<S, 2>> a;
-        vector<int> in(n), cnt(n);
+        vector<int> in(n), cnt(n), id(n << 1);
 
         int t = 0;
         auto dfs = [&](int u, int p, auto&& self) -> void {
-            in[u] = t++;
-            a.push_back({_a[u], u});
-
+            id[t] = u, in[u] = t++;
             for (const int& i : adj[u])
                 if (i != p)
                     self(i, u, self);
-
-            t++;
-            a.push_back({_a[u], u});
+            id[t++] = u;
         };
         dfs(0, -1, dfs);
 
@@ -114,14 +109,15 @@ struct tree_mo {
         };
 
         auto handle = [&](int i, bool ins) {
+            i = id[i];
             if (ins) {
-                if (++cnt[a[i][1]] == 2)
+                if (++cnt[i] == 2)
                     erase(i);
                 else
                     insert(i);
             }
             else {
-                if (--cnt[a[i][1]] == 1)
+                if (--cnt[i] == 1)
                     insert(i);
                 else
                     erase(i);
