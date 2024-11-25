@@ -18,11 +18,11 @@ struct DSU {
 };
 
 // O(nlog(n)), O(1)
-struct max_path {
+struct line_tree {
     vector<int> in;
     vector<vector<int>> d;
 
-    max_path(vector<array<int, 3>>& e) {
+    line_tree(vector<array<int, 3>>& e) {
         int n = e.size() + 1;
         sort(e.begin(), e.end());
 
