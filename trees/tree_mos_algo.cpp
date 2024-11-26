@@ -1,3 +1,4 @@
+// O(n), O(log(n))
 struct LCA {
     struct node { int d, jump, p; };
     vector<node> go;
@@ -50,6 +51,7 @@ struct LCA {
     }
 };
 
+// O((n + m)sqrt(m))
 template <class S, class F>
 struct tree_mo {
     struct query { int l, r, i, p; int64_t h; };
