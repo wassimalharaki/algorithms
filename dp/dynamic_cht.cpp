@@ -11,7 +11,7 @@ struct dynamic_cht : multiset<line, less<>> {
     static const int inf = LLONG_MAX;
 
     int div(int a, int b) {
-        return a / b - ((a ^ b) < 0 && a % b); 
+        return a / b - ((a ^ b) < 0 and a % b); 
     }
 
     bool isect(iterator x, iterator y) {
@@ -29,10 +29,10 @@ struct dynamic_cht : multiset<line, less<>> {
         auto z = insert({a, b, 0}), y = z++, x = y;
 
         while (isect(y, z)) z = erase(z);
-        if (x != begin() && isect(--x, y))
+        if (x != begin() and isect(--x, y))
             isect(x, y = erase(y));
 
-        while ((y = x) != begin() && (--x) -> p >= y -> p)
+        while ((y = x) != begin() and (--x) -> p >= y -> p)
             isect(x, erase(y));
     }
 

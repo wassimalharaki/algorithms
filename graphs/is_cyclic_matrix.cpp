@@ -15,7 +15,7 @@ bool is_cyclic(const vector<vector<int>>& adj) {
     };
 
     for (int i = 0; i < n; i++)
-        if (c[i] == 0 && dfs(i, dfs))
+        if (c[i] == 0 and dfs(i, dfs))
             return 1;
     return 0;
 }
