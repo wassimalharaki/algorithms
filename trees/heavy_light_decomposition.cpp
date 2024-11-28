@@ -1,11 +1,12 @@
-template <class S, class T, S (*op)(S, S), S (*e)()>
+template <class U, class S, S (*op)(S, S), S (*e)()>
 struct HLD {
     vector<int> p, d, tree_id, idx, root;
-    vector<T> trees;
+    vector<U> trees;
 
     HLD(const vector<vector<int>>& adj, const vector<S>& a, int src = 0) {
         int n = adj.size(), curr_root;
-        vector<int> cnt(n), chain;
+        vector<int> cnt(n);
+        vector<S> chain;
         p.resize(n);
         d.resize(n);
         tree_id.resize(n);
@@ -32,7 +33,7 @@ struct HLD {
             root[u] = curr_root;
 
             if (adj[u].size() == 1 and p[u] != -1) {
-                trees.push_back(T(chain));
+                trees.push_back(U(chain));
                 chain.clear();
             }
             else {

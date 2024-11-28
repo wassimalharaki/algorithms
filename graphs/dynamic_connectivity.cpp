@@ -56,7 +56,7 @@ struct dc_graph {
         e.push_back({a, b, t++});
     }
 
-    void query() { q[t++] = 1; }
+    void prod() { q[t++] = 1; }
 
     void apply(int l, int r, array<int, 2> x) {
         l += size, r += size;

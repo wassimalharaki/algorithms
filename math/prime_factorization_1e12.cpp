@@ -35,6 +35,6 @@ vector<array<int, 2>> prime_factors(int n) {
         }
     }
     if (n != 1) pfs.push_back({n, 1});
-    
+
     return pfs;
 }

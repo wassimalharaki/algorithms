@@ -54,6 +54,6 @@ vector<int> divisors(int n, int p = 1) {
         } 
     }
     if (n != 1) pfs.push_back({n, p});
-    
+
     return gen_divisors(pfs);
 }
