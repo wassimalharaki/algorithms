@@ -482,6 +482,14 @@ namespace Geometry {
     struct Polygon {
         vec<P> ps;
 
+        P& operator[](size_t i) {
+            return ps[i];
+        }
+
+        const P& operator[](size_t i) const {
+            return ps[i];
+        }
+
         explicit Polygon(int n): ps(n) {}
         explicit Polygon(const vec<P>& ps): ps{ps} {}
 
