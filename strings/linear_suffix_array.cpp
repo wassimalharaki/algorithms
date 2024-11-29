@@ -1,3 +1,4 @@
+// O(n)
 template <int TN = 10, int TB = 40>
 vector<int> sa_is(const vector<int>& s, int upper) {
     int n = (int) s.size();
@@ -15,7 +16,7 @@ vector<int> sa_is(const vector<int>& s, int upper) {
         iota(sa.begin(), sa.end(), 0);
         sort(sa.begin(), sa.end(), [&](int l, int r) {
             if (l == r) return false;
-            while (l < n && r < n) {
+            while (l < n and r < n) {
                 if (s[l] != s[r])
                     return s[l] < s[r];
                 l++; r++;
@@ -72,13 +73,13 @@ vector<int> sa_is(const vector<int>& s, int upper) {
         sa[buf[s[n - 1]]++] = n - 1;
         for (int i = 0; i < n; i++) {
             int v = sa[i];
-            if (v >= 1 && !ls[v - 1])
+            if (v >= 1 and !ls[v - 1])
                 sa[buf[s[v - 1]]++] = v - 1;
         }
         copy(sum_l.begin(), sum_l.end(), buf.begin());
         for (int i = n - 1; i >= 0; i--) {
             int v = sa[i];
-            if (v >= 1 && ls[v - 1])
+            if (v >= 1 and ls[v - 1])
                 sa[--buf[s[v - 1] + 1]] = v - 1;
         }
     };
@@ -86,12 +87,12 @@ vector<int> sa_is(const vector<int>& s, int upper) {
     vector<int> lms_map(n + 1, -1);
     int m = 0;
     for (int i = 1; i < n; i++)
-        if (!ls[i - 1] && ls[i])
+        if (!ls[i - 1] and ls[i])
             lms_map[i] = m++;
     vector<int> lms;
     lms.reserve(m);
     for (int i = 1; i < n; i++)
-        if (!ls[i - 1] && ls[i])
+        if (!ls[i - 1] and ls[i])
             lms.push_back(i);
 
     induce(lms);
@@ -133,6 +134,7 @@ vector<int> sa_is(const vector<int>& s, int upper) {
     return sa;
 }
 
+// O(n)
 vector<int> suffix_array(const string& s) {
     int n = (int) s.size();
     vector<int> s2(n);

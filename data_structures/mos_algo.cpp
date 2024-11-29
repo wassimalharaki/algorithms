@@ -1,4 +1,4 @@
-// O((n + m)sqrt(m)F(insert + delete))
+// O((n + m)sqrt(m))
 template <class S, class F>
 struct mo_s {
     struct query { int l, r, i; int64_t h; };
