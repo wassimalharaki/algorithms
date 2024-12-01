@@ -9,15 +9,6 @@ namespace Geometry {
     using Circle = pair<P, ftype>;
     using Triangle = tuple<P, P, P>;
 
-    double heron(const P& p1, const P& p2, const P& p3) {
-        double a = p1.dist(p2);
-        double b = p1.dist(p3);
-        double c = p3.dist(p2);
-        double s = (a+b+c)/2.0;
-        double area = sqrt( s*(s-a)*(s-b)*(s-c) );
-        return area;
-    }
-
     bool pointInTriangle(const P& a, const P& b, const P& c, const P& p) {
         ftype s1 = abs(a.cross(b, c));
         ftype s2 = abs(p.cross(a, b)) + abs(p.cross(b, c)) + abs(p.cross(c, a));
@@ -42,11 +33,6 @@ namespace Geometry {
         if (ls(v, 0)) return -1; // clockwise
         if (ls(0, v)) return +1; // counter-clockwise
         return 0;
-    }
-
-    namespace bentley_ottoman {
-
-
     }
 
     bool cw(const P& a, const P& b, const P& c, bool include_collinear) {
@@ -495,7 +481,7 @@ namespace Geometry {
 
         Polygon operator-() const {
             vec<P> t{ps};
-            for (P& p: t) p = -p;
+            for (P& p: t) p *= -1;
             return Polygon{t};
         }
 
@@ -531,16 +517,16 @@ namespace Geometry {
         // check if point is in for convex polygon
         // polygon ordered ccw
         // O(log(n))
+        bool prepared = false;
+        vec<P> seq{};
+        P translation{};
         bool pinConvex(P p) {
-            static bool prepared = false;
-            static vec<P> seq;
-            static P translation;
             if (not prepared) {
                 prepare(ps, seq, translation);
                 prepared = true;
             }
 
-            int n = (int)ps.size();
+            int n = (int)ps.size() - 1;
             p -= translation;
             if (not eq(seq[0].cross(p), 0) and sign(seq[0].cross(p)) != sign(seq[0].cross(seq[n - 1]))) return false;
             if (not eq(seq[n - 1].cross(p), 0) and sign(seq[n - 1].cross(p)) != sign(seq[n - 1].cross(seq[0]))) return false;
@@ -686,7 +672,7 @@ namespace Geometry {
                 res.push_back(p.ps[i] + q.ps[j]);
                 ftype cross = (p.ps[i + 1] - p.ps[i]).cross(q.ps[j + 1] - q.ps[j]);
                 if (lse(0, cross) and i + 2 < (int)p.ps.size()) i++;
-                if (lse(0, cross) and j + 2 < (int)q.ps.size()) j++;
+                if (lse(cross, 0) and j + 2 < (int)q.ps.size()) j++;
             }
             return Polygon{res};
         }
@@ -1125,5 +1111,23 @@ namespace Geometry {
             else ans += area;
         }
         return abs(ans);
+    }
+
+    // maximum distance from any point on the perimeter to another point on the perimeter
+    double diameter(vector<P>& p) {
+        int n = (int)p.size();
+        if (n == 1) return 0;
+        if (n == 2) return p[0].dist(p[1]);
+        double ans = 0;
+        int i = 0, j = 1;
+        while (i < n) {
+            while (lse(0, (p[(i + 1) % n] - p[i]).cross(p[(j + 1) % n] - p[j]))) {
+                ans = max(ans, p[i].dist2(p[j]));
+                j = (j + 1) % n;
+            }
+            ans = max(ans, p[i].dist2(p[j]));
+            i++;
+        }
+        return sqrt(ans);
     }
 }

@@ -396,5 +396,19 @@ namespace Geometry {
     };
 
     P inf_pt{inf, inf};
+
+    double heron(const P& p1, const P& p2, const P& p3) {
+        double a = p1.dist(p2);
+        double b = p1.dist(p3);
+        double c = p3.dist(p2);
+        double s = (a+b+c)/2.0;
+        double area = sqrt( s*(s-a)*(s-b)*(s-c) );
+        return area;
+    }
+
+    bool isCollinear(const P& a, const P& b, const P& c) {
+        return eq(0, heron(a, b, c));
+    }
 }
 using namespace Geometry;
+

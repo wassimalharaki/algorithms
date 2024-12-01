@@ -85,6 +85,9 @@ namespace Geometry {
             if (ls(1, t)) t = 1;
             return petP(t).dist(p);
         }
+        ftype mx_dist(const P& p) const {
+            return max(p.dist(s), p.dist(d));
+        }
         ftype ldist(const V& v) const {
             VectorInter inter = intersection(v);
             if (inter.t != InterT::no) return 0;
