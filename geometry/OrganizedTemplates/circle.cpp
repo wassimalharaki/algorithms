@@ -40,8 +40,7 @@ vector<P> circle_seg_intersection(const P& c, ftype r, const P& a, const P& b) {
     V v{a, b};
     vector<P> res;
     while (not li.empty()) {
-        ftype p = v.getP(li.back()).S;
-        if (not ls(p, 0) and not ls(1, p)) res.push_back(li.back());
+        if (v.on(li.back())) res.push_back(li.back());
         li.pop_back();
     }
     return res;

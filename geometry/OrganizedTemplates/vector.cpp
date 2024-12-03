@@ -255,10 +255,16 @@ namespace Geometry {
                 return {p == s, 0};
             }
         }
-        P lp() const {
+        P& lp() {
             return s < d ? s : d;
         }
-        P rp() const {
+        P& rp() {
+            return s < d ? d : s;
+        }
+        const P& lp() const {
+            return s < d ? s : d;
+        }
+        const P& rp() const {
             return s < d ? d : s;
         }
         ftype left() const {
@@ -300,7 +306,7 @@ namespace Geometry {
             return s == v.s and d == v.d;
         }
         bool operator<(const V& v) const {
-            return s < v.s or s == v.s and d < v.d;
+            return lp() < v.lp() or lp() == v.lp() and ls(abs(), v.abs());
         }
         // To the left of the vector
         bool operator<(const P& p) const {
