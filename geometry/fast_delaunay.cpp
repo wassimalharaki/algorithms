@@ -16,10 +16,8 @@
 
 #include "./polygon.cpp"
 #define sz(v) ((int)v.size())
-
 typedef struct Quad* Q;
 P arb(LLONG_MAX,LLONG_MAX); // not equal to any other point
-
 struct Quad {
     Q rot, o; P p = arb; bool mark;
     P& F() { return r()->p; }
@@ -27,7 +25,6 @@ struct Quad {
     Q prev() const { return rot->o->rot; }
     Q next() { return r()->prev(); }
 } *H;
-
 bool circ(P p, P a, P b, P c) { // is p in the circumcircle?
     ftype p2 = p.norm(), A = a.norm()-p2,
           B = b.norm()-p2, C = c.norm()-p2;
@@ -51,7 +48,6 @@ Q connect(Q a, Q b) {
     splice(q->r(), b);
     return q;
 }
-
 pair<Q,Q> rec(const vector<P>& s) {
     if (sz(s) <= 3) {
         Q a = makeEdge(s[0], s[1]), b = makeEdge(s[1], s.back());
@@ -91,7 +87,6 @@ pair<Q,Q> rec(const vector<P>& s) {
     }
     return { ra, rb };
 }
-
 vector<P> triangulateFast(vector<P> pts) {
     sort(all(pts));  assert(unique(all(pts)) == pts.end());
     if (sz(pts) < 2) return {};
