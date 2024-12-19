@@ -20,9 +20,6 @@ using namespace __gnu_pbds;
 #define F first
 #define S second
 #define INF LONG_LONG_MAX
-#define MOD 1000000007ll
-#define EPS 1e-9l
-#define PI 3.14159265358979323846264338327950288L
 #define pii pair<int, int>
 #define vec vector
 #define LT int T; cin >> T; while (T--)
@@ -37,10 +34,12 @@ namespace Geometry {
     using atype = double;
     const double eps = 1e-9l;
     const double pi = acos(-1.0l);
-    const double e = exp(1.0L);
-    const double inf = INF;
+//    const double e = exp(1.0L);
+    const double inf = 1e18l;
+    const int mod = 1e9 + 7;
     const int iinf = LONG_LONG_MAX;
     int32_t prec = 25;
+    bool useDoubleIn = false;
 
     ftype sqr(ftype v) { return v * v; }
 
@@ -69,19 +68,34 @@ namespace Geometry {
         return ls(a, b) or eq(a, b);
     }
 
-    //bool gt(const ftype& a, const ftype& b) {
-    //    return a > b;
+    //bool bt(const ftype& a, const ftype& b, const ftype& c) {
+    //    return a < b and b < c;
     //}
-    bool gt(const ftype& a, const ftype& b) {
-        return not ls(a, b) and not eq(a, b);
+    bool bt(const ftype& a, const ftype& b, const ftype& c) {
+        return ls(a, b) and ls(b, c);
+    }
+
+    //bool bte(const ftype& a, const ftype& b, const ftype& c) {
+    //    return a <= b and b <= c;
+    //}
+    bool bte(const ftype& a, const ftype& b, const ftype& c) {
+        return lse(a, b) and lse(b, c);
     }
 
     ftype max(const ftype& a, const ftype& b) {
         return ls(a, b) ? b : a;
     }
 
+    int max(int a, int b) {
+        return a < b ? b : a;
+    }
+
     ftype min(const ftype& a, const ftype& b) {
         return ls(a, b) ? a : b;
+    }
+
+    int min(int a, int b) {
+        return a < b ? a : b;
     }
 
     optional<array<ftype, 2>> quadratic(ftype a, ftype b, ftype c) {
@@ -106,12 +120,19 @@ namespace Geometry {
         return 0;
     }
 
-    // Orientation of 3 points forming an angle
-    enum class Orientation {
-        l = 1,
-        r = -1,
-        c = 0
-    };
+    pair<int, int> reduce(ftype v0, ftype v1) {
+        // log(n)
+        int a = (int)v0, b = (int)v1;
+        if (a == 0) return {0, sign(b)};
+        if (b == 0) return {sign(a) * iinf, 0};
+        int g = gcd(a, b);
+        return {a / g, b / g};
+    }
+
+    pair<int, int> reducef(ftype v0, ftype v1) {
+        // log(n)
+        return reduce(v0 * 1e6l, v1 * 1e6l);
+    }
 
     // 2D point
     struct P {
@@ -132,6 +153,9 @@ namespace Geometry {
         }
         ftype dist(const P& p) const {
             return (*this - p).abs();
+        }
+        ftype dist2(const P& p) const {
+            return (*this - p).norm();
         }
         atype r() const {
             return hypot(x, y);
@@ -231,24 +255,45 @@ namespace Geometry {
         bool operator<(const P& p) const {
             return eq(p.x, x) ? ls(y, p.y) : ls(x, p.x);
         }
+        bool ycmp(const P& p) const {
+            return eq(p.y, y) ? ls(x, p.x) : ls(y, p.y);
+        }
         bool operator<=(const P& p) const {
             return *this < p or *this == p;
+        }
+        ftype slope() const {
+            return y / x;
+        }
+        pair<int, int> fslope() const {
+            return reduce(y, x);
+        }
+        pair<int, int> inorm() const {
+            return reduce(x, y);
         }
         ftype cross(const P& b, const P& c) const {
             return (b - *this).cross(c - *this);
         }
-        Orientation orientation(const P& pb, const P& pc) const {
-            const P& pa = *this;
-            ftype d = (pb - pa).cross(pc - pa);
-            return static_cast<Orientation>(
-                    ls(0, d) - ls(d, 0)
-            );
+        bool is_point_in_angle(P b, const P& a, P c) const {
+            // does point p lie in angle <bac
+            assert(c.orientation(a, b) != 0);
+            if (a.orientation(c, b) < 0) swap(b, c);
+            return a.orientation(c, *this) >= 0 && a.orientation(b, *this) <= 0;
+        }
+        // 1 this is to right of ab, 0 collinear, -1 to left
+        int orientation(const P& a, const P& b) const {
+            // orientation of this with respect to AB
+            const P& c = *this;
+            ftype d = (b - c).cross(a - c);
+            return sign(d);
         }
         ftype cross(const P& p) const {
             return x * p.y - y * p.x;
         }
         ftype dot(const P& p) const {
             return x * p.x + y * p.y;
+        }
+        ftype dot(const P& a, const P& b) const {
+            return (a - *this).dot(b - *this);
         }
         ftype norm() const {
             return dot(*this);
@@ -261,7 +306,7 @@ namespace Geometry {
             ftype k = abs();
             if (sign(k) == 0) return *this;
             v /= k;
-            return {x * v, y * v};
+            return *this * v;
         }
         P normalize() const {
             return truncate(1);
@@ -271,6 +316,12 @@ namespace Geometry {
         }
         P normal_r() const {
             return {y, -x};
+        }
+        P normal_lfs() const {
+            return P(fslope()).normal_l();
+        }
+        P normal_rfs() const {
+            return P(fslope()).normal_r();
         }
         P rotateccw(const atype& angle, const P& ref = {0, 0}) const {
             P res;
@@ -286,6 +337,10 @@ namespace Geometry {
             return p * v;
         }
         friend istream& operator>>(istream& in, P& p) {
+            if (useDoubleIn) {
+                return in >> p.x >> p.y;
+            }
+
             int xv, yv;
             in >> xv >> yv;
             p = P(xv, yv);
@@ -339,100 +394,21 @@ namespace Geometry {
             return splitmix128(x + FIXED_RANDOM);
         }
     };
+
+    P inf_pt{inf, inf};
+
+    double heron(const P& p1, const P& p2, const P& p3) {
+        double a = p1.dist(p2);
+        double b = p1.dist(p3);
+        double c = p3.dist(p2);
+        double s = (a+b+c)/2.0;
+        double area = sqrt( s*(s-a)*(s-b)*(s-c) );
+        return area;
+    }
+
+    bool isCollinear(const P& a, const P& b, const P& c) {
+        return eq(0, heron(a, b, c));
+    }
 }
 using namespace Geometry;
 
-using Node = pair<double, pii>;
-
-double minDisToX(const P& from, const P& to, double X, double alpha, double beta) {
-    if (eq(to.x, X)) return 0;
-
-    P Vx(X - to.x, 0);
-    double theta = Vx.angle(from - to);
-
-    if (ls(theta, alpha)) {
-        if (lse(0, Vx.cross(from - to))) Vx ^= alpha - theta;
-        else Vx ^= theta - alpha;
-
-    } else if (ls(beta, theta)) {
-        if (lse(0, Vx.cross(from - to))) Vx ^= theta - beta;
-        else Vx ^= beta - theta;
-    }
-    if (ls(abs(Vx.x), 0)) return inf;
-    double m = (X - to.x) / Vx.x;
-    if (ls(m, 0)) return inf;
-    return (Vx * m).abs();
-}
-
-void solve() {
-    int n, l, s, alpha_i, beta_i;
-    cin >> n >> l >> s >> alpha_i >> beta_i;
-    double alpha = torad(alpha_i), beta = torad(beta_i);
-    vec<P> ps(n);
-    vec2d<pair<int, double>> adj(n);
-    for (P& p: ps) cin >> p;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < i; j++) {
-            double d = ps[i].dist(ps[j]);
-            if (ls(d, l)) {
-                adj[i].emplace_back(j, d);
-                adj[j].emplace_back(i, d);
-            }
-        }
-    }
-    vec2d<double> dis(n + 1, vec<double>(n + 1));
-    for (int i = 1; i <= n; i++) {
-        for (int j = 1; j <= n; j++) {
-            dis[i][j] = inf;
-        }
-    }
-    auto cmp = [](const Node& a, const Node& b) -> bool {
-        if (eq(a.F, b.F)) return a.S < b.S;
-        return ls(a.F, b.F);
-    };
-    priority_queue<Node, vec<Node>, decltype(cmp)> q;
-    for (int i = 0; i < n; i++) {
-        for (int j = 0; j < n; j++) {
-            double d2 = ps[i].dist(ps[j]);
-            if (i == j or ls(l, d2) or ls(l, ps[i].x)) continue;
-            double d = minDisToX(ps[j], ps[i], 0, alpha, beta);
-            if (ls(l, d)) continue;
-            dis[i][j] = d + d2;
-            q.push({-(d + d2), {i, j}});
-        }
-    }
-    double ans = inf;
-    while (not q.empty()) {
-        double cost = -q.top().F;
-        auto [x, y] = q.top().S;
-        q.pop();
-        if (ls(ans, cost)) continue;
-        double d = minDisToX(ps[x], ps[y], s, alpha, beta);
-
-        if (ls(d, l)) {
-            ans = min(ans, cost + d);
-        }
-        for (auto& p: adj[y]) {
-            double theta = (ps[p.F] - ps[y]).angle(ps[x] - ps[y]);
-            if (lse(alpha, theta) and lse(theta, beta)) {
-                if (ls(cost + p.S, dis[y][p.F]) and ls(cost + p.S, ans)) {
-                    dis[y][p.F] = cost + p.S;
-                    q.push({-dis[y][p.F], {y, p.F}});
-                }
-            }
-        }
-    }
-    if (ans > 1e15) ans = -1;
-    cout << ans << nl;
-}
-
-int32_t main() {
-    fast
-    const string NAME{"ninja"};
-    if (NAME != " ") {
-        freopen((NAME + ".in").c_str(), "r", stdin);
-//        freopen((NAME + ".out").c_str(), "w", stdout);
-    }
-    setPrec();
-    LT solve();
-}

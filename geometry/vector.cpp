@@ -85,6 +85,9 @@ namespace Geometry {
             if (ls(1, t)) t = 1;
             return petP(t).dist(p);
         }
+        ftype mx_dist(const P& p) const {
+            return max(p.dist(s), p.dist(d));
+        }
         ftype ldist(const V& v) const {
             VectorInter inter = intersection(v);
             if (inter.t != InterT::no) return 0;
@@ -192,6 +195,24 @@ namespace Geometry {
 
             // Collinear
             if (isnan(t0) or isnan(t1)) {
+                if (lp() == v.rp()) {
+                    p = lp();
+                    return {
+                            InterT::yes,
+                            p,
+                            getP(p).S,
+                            v.getP(p).S
+                    };
+                }
+                if (rp() == v.lp()) {
+                    p = rp();
+                    return {
+                            InterT::yes,
+                            p,
+                            getP(p).S,
+                            v.getP(p).S
+                    };
+                }
                 bool os = on(v.s), od = on(v.d);
                 if (os or od) {
                     p = (os ? v.s : v.d);
@@ -252,10 +273,16 @@ namespace Geometry {
                 return {p == s, 0};
             }
         }
-        P lp() const {
+        P& lp() {
             return s < d ? s : d;
         }
-        P rp() const {
+        P& rp() {
+            return s < d ? d : s;
+        }
+        const P& lp() const {
+            return s < d ? s : d;
+        }
+        const P& rp() const {
             return s < d ? d : s;
         }
         ftype left() const {
@@ -271,12 +298,13 @@ namespace Geometry {
             return ls(d.y, s.y) ? s.y : d.y;
         }
         bool onPath(const P& p) const {
-            if (eq(norm(), 0)) return p == s;
-            return eq(r().cross(p - s), 0);
+            return isCollinear(s, d, p);
         }
         bool on(const P& p) const {
             // Not collinear or behind
-            return onPath(p) and lse(left(), p.x) and lse(p.x, right());
+            if (not onPath(p)) return false;
+            if (vertical()) return lse(bottom(), p.y) and lse(p.y, top());
+            return lse(left(), p.x) and lse(p.x, right());
         }
         bool onRay(const P& p) const {
             if (not onPath(p)) return false;
@@ -297,7 +325,10 @@ namespace Geometry {
             return s == v.s and d == v.d;
         }
         bool operator<(const V& v) const {
-            return s < v.s or s == v.s and d < v.d;
+            if (lp() == v.lp()) {
+                return rp() < v.rp();
+            }
+            return lp() < v.lp();
         }
         // To the left of the vector
         bool operator<(const P& p) const {
@@ -422,26 +453,8 @@ namespace Geometry {
         friend ostream& operator<<(ostream& out, const V& v) {
             return out << v.s << ", " << v.d;
         }
+        bool collinear(const V& v) const {
+            return isCollinear(s, d, v.s) and isCollinear(s, d, v.d);
+        }
     };
 }
-
-//void solve() {
-//    V v0{0, 0, 1, 1}, v1{2, 2, 3, 4};
-//    cout << v1 << nl << v1.normal_l() << nl << v1.normal_r() << nl;
-////    V vp0{0, 0, 1, 1}, vp1{0, -1, 1, 0};
-////    V ve0{0, 0, 1, 1};
-////    P p{0, 0}, p1{1, 1}, p2{-2, -2}, p3{-2, -3};
-////    cout << v0.on(p) << ' ' << v0.onPath(p) << nl;
-////    cout << v0.on(p1) << ' ' << v0.onPath(p1) << nl;
-////    cout << v0.on(p2) << ' ' << v0.onPath(p2) << nl;
-////    cout << v0.on(p3) << ' ' << v0.onPath(p3) << nl;
-////    const auto& i = v0.intersection(v1);
-////    cout << i.p << ' ' << (int)i.t << nl;
-////    cout << vp0.intersection(vp1).p << nl;
-////    cout << ve0.intersection(ve0).p << nl;
-//}
-
-//int32_t main() {
-//    fast
-//    solve();
-//}

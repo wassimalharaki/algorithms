@@ -6,21 +6,22 @@
 #include "./polygon.cpp"
 
 // Ps returned in cw order
-vector<P> circle_circle_intersection(const P& a, ftype r, const P& b, ftype R) {
-    if (a == b and sign(r - R) == 0) return {P(inf, inf)};
-    vector<P> ret;
+// 0 no, -1 infinite, 1 one inter, 2 two inter
+int circle_circle_intersection(const P& a, ftype r, const P& b, ftype R, vec<P>& ret) {
+    if (a == b and sign(r - R) == 0) return -1;
     ftype d = a.dist(b);
-    if (ls(r + R, d) or ls(d + min(r,  R), max(r, R))) return ret;
+    if (ls(r + R, d) or ls(d + min(r,  R), max(r, R))) return 0;
     ftype x = (d * d - R * R + r * r) / (2 * d);
     ftype y = sqrt(r * r - x * x);
     P v = (b - a) / d;
     ret.push_back(a + v * x  + v.rotateccw(pi / 2) * y);
     if (ls(0, y)) ret.push_back(a + v * x - v.rotateccw(pi / 2) * y);
-    return ret;
+    return ret.size();
 }
 
-vector<P> circle_circle_intersection(const Circle& c0, const Circle& c1) {
-    return circle_circle_intersection(c0.F, c0.S, c1.F, c1.S);
+// same as above
+int circle_circle_intersection(const Circle& c0, const Circle& c1, vec<P>& ret) {
+    return circle_circle_intersection(c0.F, c0.S, c1.F, c1.S, ret);
 }
 
 vector<P> circle_line_intersection(const P& c, ftype r, P a, P b) {
@@ -40,8 +41,7 @@ vector<P> circle_seg_intersection(const P& c, ftype r, const P& a, const P& b) {
     V v{a, b};
     vector<P> res;
     while (not li.empty()) {
-        ftype p = v.getP(li.back()).S;
-        if (not ls(p, 0) and not ls(1, p)) res.push_back(li.back());
+        if (v.on(li.back())) res.push_back(li.back());
         li.pop_back();
     }
     return res;
