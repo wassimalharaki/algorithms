@@ -1,3 +1,4 @@
+// O(n), O(log^2(n))
 template <class U, class S, S (*op)(S, S), S (*e)()>
 struct HLD {
     vector<int> p, d, tree_id, idx, root;

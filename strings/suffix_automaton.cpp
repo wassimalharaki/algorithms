@@ -1,4 +1,4 @@
-// O(N * n)
+// O(nN)
 template<int N, char id>
 struct suffix_automaton {
     struct node {

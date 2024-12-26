@@ -1,3 +1,4 @@
+// O(N), O(N^2)
 template <class S, int N>
 struct basis {
     array<S, N> a;

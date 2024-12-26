@@ -63,7 +63,7 @@ template <class Cap> struct mf_graph {
                 int v = q.front();
                 q.pop();
                 for (auto e : g[v]) {
-                    if (e.cap == 0 || level[e.to] >= 0) continue;
+                    if (e.cap == 0 or level[e.to] >= 0) continue;
                     level[e.to] = level[v] + 1;
                     if (e.to == t) return;
                     q.push(e.to);
@@ -76,7 +76,7 @@ template <class Cap> struct mf_graph {
             int level_v = level[v];
             for (int& i = iter[v]; i < (int) g[v].size(); i++) {
                 _edge& e = g[v][i];
-                if (level_v <= level[e.to] || g[e.to][e.rev].cap == 0) continue;
+                if (level_v <= level[e.to] or g[e.to][e.rev].cap == 0) continue;
                 Cap d = self(e.to, min(up - res, g[e.to][e.rev].cap), self);
                 if (d <= 0) continue;
                 g[v][i].cap += d;

@@ -31,6 +31,7 @@ void fft(vector<cd>& a, bool inv) {
             x /= n;
 }
 
+//O(nlog(n))
 vector<int> multiply(const vector<int>& a, const vector<int>& b) {
     vector<cd> fa(a.begin(), a.end()), fb(b.begin(), b.end());
     int n = 1;

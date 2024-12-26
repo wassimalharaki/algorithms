@@ -1,3 +1,4 @@
+// O(n), O(log^2(n))
 template <class S>
 struct segtree_beats {
     static constexpr S INF = numeric_limits<S>::max() / 2.1;

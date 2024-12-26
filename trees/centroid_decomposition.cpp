@@ -1,3 +1,4 @@
+// O(nlog(n))
 vector<int> centroid_decomp(const vector<vector<int>>& adj) {
     vector<int> sz(adj.size()), par(adj.size()), dead(adj.size());
 

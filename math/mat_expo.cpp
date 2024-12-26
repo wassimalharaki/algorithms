@@ -1,3 +1,4 @@
+// O(nm), O(nm^2)
 template <class S, S mod = (S) 1e9 + 7>
 struct matrix {
     vector<vector<S>> a;

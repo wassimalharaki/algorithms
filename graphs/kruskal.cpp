@@ -17,7 +17,7 @@ struct DSU {
     }
 };
 
-// O(nlog(n))
+// O(Elog(E))
 int kruskal(int n, vector<array<int, 3>>& edges) {
     sort(edges.begin(), edges.end());
 

@@ -1,4 +1,4 @@
-// O(E)
+// O(V + E)
 vector<int> euler_cycle(vector<vector<array<int, 2>>> adj, int src = 0) {
     int m = 0;
     for (auto& a : adj) {

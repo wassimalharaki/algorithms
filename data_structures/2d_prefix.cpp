@@ -1,4 +1,4 @@
-// O(n * m)
+// O(nm)
 template <class S>
 struct prefix_2d {
     vector<vector<S>> d;

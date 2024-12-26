@@ -1,4 +1,4 @@
-// O(n)
+// O(nN)
 template <int N, char id>
 struct aho_corasick {
     struct node {

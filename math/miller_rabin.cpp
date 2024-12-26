@@ -15,7 +15,7 @@ u64 binpow(u64 base, u64 e, u64 mod) {
 
 bool check_composite(u64 n, u64 a, u64 d, int s) {
     u64 x = binpow(a, d, n);
-    if (x == 1 || x == n - 1)
+    if (x == 1 or x == n - 1)
         return false;
     for (int r = 1; r < s; r++) {
         x = (u128) x * x % n;
@@ -25,6 +25,7 @@ bool check_composite(u64 n, u64 a, u64 d, int s) {
     return true;
 }
 
+// O(log(n))
 bool miller_rabin(u64 n) {
     if (n < 2)
         return false;

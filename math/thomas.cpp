@@ -1,4 +1,4 @@
-// O(n * log(b[i]))
+// O(nlog(b[i]))
 // a[i] * f(x - 1) + b[i] * f(x) + c[i] * f(x + 1) = d[i]
 vector<int> thomas(vector<int>& a, vector<int>& b, vector<int>& c, vector<int>& d) {
     int n = a.size();

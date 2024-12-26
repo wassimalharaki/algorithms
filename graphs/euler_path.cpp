@@ -1,4 +1,4 @@
-// O(E)
+// O(V + E)
 vector<int> euler_path(vector<vector<int>> adj, int src, int dst) {
     int n = adj.size(), m = 0;
 

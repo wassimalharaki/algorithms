@@ -1,3 +1,4 @@
+// O(V + E)
 vector<int> get_cutpoints(const vector<vector<int>>& adj) {
     int n = adj.size(), t = 0;
     vector<char> vis(n), is_cutpoint(n);

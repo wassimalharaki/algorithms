@@ -119,7 +119,7 @@ vector<int> sa_is(const vector<int>& s, int upper) {
                         break;
                     l++, r++;
                 }
-                if (l == n || s[l] != s[r])
+                if (l == n or s[l] != s[r])
                     same = 0;
             }
             if (!same) rec_upper++;

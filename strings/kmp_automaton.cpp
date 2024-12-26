@@ -1,4 +1,4 @@
-// O(N * n)
+// O(nN)
 template <int N, char id>
 vector<vector<int>> kmp_automaton(string s) {
     s.push_back('#');

@@ -1,4 +1,4 @@
-// O(n * m), O(log(n) * log(m))
+// O(nm), O(log(n)log(m))
 template <class S, S (*op)(S, S), S (*e)()>
 struct segtree_2d {
     int n, m, size_n, size_m, log_n, log_m;

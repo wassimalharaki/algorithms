@@ -1,3 +1,4 @@
+// O(V + E)
 struct block_cut_tree {
     vector<int> comp;
     vector<char> is_cutpoint;
@@ -24,7 +25,7 @@ struct block_cut_tree {
                 self(i, u, self);
                 low[u] = min(low[u], low[i]);
                 if (low[i] >= disc[u]) {
-                    is_cutpoint[u] = disc[u] > 1 || disc[i] > 2;
+                    is_cutpoint[u] = disc[u] > 1 or disc[i] > 2;
 
                     comps.push_back({u});
                     while (comps.back().back() != i) {

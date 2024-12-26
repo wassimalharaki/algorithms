@@ -10,7 +10,7 @@ const array<const int, 12> M{
 vector<int> B;
 array<vector<int>, 12> p;
 
-// O(N * n), O(N)
+// O(nN), O(N)
 template <int N>
 struct hash_n {
     array<vector<int>, N> h;

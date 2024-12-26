@@ -1,3 +1,4 @@
+// O(V + E)
 vector<array<int, 2>> get_bridges(const vector<vector<int>>& adj) {
     int n = adj.size(), t = 0;
     vector<char> vis(n);
