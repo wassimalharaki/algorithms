@@ -33,7 +33,7 @@ struct HLD {
             chain.push_back(a[u]);
             root[u] = curr_root;
 
-            if (adj[u].size() == 1 and p[u] != -1) {
+            if (adj[u].empty() or (adj[u].size() == 1 and p[u] != -1)) {
                 trees.push_back(U(chain));
                 chain.clear();
             }

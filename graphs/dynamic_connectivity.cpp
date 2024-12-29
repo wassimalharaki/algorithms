@@ -91,7 +91,7 @@ struct dc_graph {
             }
             else if (q[i - size])
                 ans.push_back(ds.comp);
-            
+
             for (int j = 0; j < (int) d[i].size(); j++)
                 ds.rollback();
         };
