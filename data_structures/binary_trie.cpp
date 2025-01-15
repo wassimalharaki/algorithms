@@ -16,7 +16,7 @@ struct binary_trie {
 
     void insert(int x) {
         int rt = 0;
-        for (int i = N; i >= 0; i--) {
+        for (int i = N - 1; i >= 0; i--) {
             bool b = (1ll << i) & x;
             if (not d[rt].go[b])
                 d[rt].go[b] = add_node();
@@ -27,7 +27,7 @@ struct binary_trie {
 
     void erase(int x) {
         int rt = 0;
-        for (int i = N; i >= 0; i--) {
+        for (int i = N - 1; i >= 0; i--) {
             bool b = (1ll << i) & x;
             rt = d[rt].go[b];
             d[rt].cnt--;
@@ -36,7 +36,7 @@ struct binary_trie {
 
     int min_xor(int x) {
         int rt = 0, ans = 0;
-        for (int i = N; i >= 0; i--) {
+        for (int i = N - 1; i >= 0; i--) {
             bool b = (1ll << i) & x;
             if (d[rt].go[b] and d[d[rt].go[b]].cnt)
                 rt = d[rt].go[b];
@@ -48,7 +48,7 @@ struct binary_trie {
 
     int max_xor(int x) {
         int rt = 0, ans = 0;
-        for (int i = N; i >= 0; i--) {
+        for (int i = N - 1; i >= 0; i--) {
             bool b = !((1ll << i) & x);
             if (d[rt].go[b] and d[d[rt].go[b]].cnt)
                 ans += 1ll << i, rt = d[rt].go[b];

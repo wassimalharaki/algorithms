@@ -19,17 +19,18 @@ struct DSU {
 
 // O(Elog(E))
 int kruskal(int n, vector<array<int, 3>>& edges) {
-    sort(edges.begin(), edges.end());
+    sort(edges.begin(), edges.end(), [](auto& x, auto& y) {
+        return x[2] < y[2];
+    });
 
-    // vector<array<int, 3>> tree(n - 1);
     DSU ds(n);
     int cost = 0, j = 0;
+    // vector<array<int, 3>> tree(n - 1);
     for (int i = 0; j < n - 1 and i < (int) edges.size(); i++) {
-        int a = edges[i][1], b = edges[i][2];
+        auto [a, b, c] = edges[i];
         if (not ds.merge(a, b)) continue;
-        // tree[j][1] = a; tree[j][2] = b; tree[j][0] = edges[i][0];
-        cost += edges[i][0];
-        j++;
+        // tree[j] = {a, b, c};
+        cost += edges[i][0], j++;
     }
     return (j == n - 1 ? cost : -1);
 }

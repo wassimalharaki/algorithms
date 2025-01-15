@@ -41,7 +41,7 @@ struct dc_graph {
 
     dc_graph(int _n, int _q) {
         t = 0, n = _n;
-        size = q <= 1 ? 1 : 1 << (1 + __lg(q - 1));;
+        size = _q <= 1 ? 1 : 1 << (1 + __lg(_q - 1));;
         q.resize(size);
         d.resize(size << 1);
     }

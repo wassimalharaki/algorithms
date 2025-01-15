@@ -16,8 +16,8 @@ vector<vector<int>> kmp_automaton(string s) {
     vector adj(n, vector<int>(N));
     for (int i = 0; i < n; i++)
         for (int j = 0; j < N; j++)
-            if (i > 0 and id + j != s[i])
-                adj[i][j] = adj[pi[i-1]][j];
+            if (i and id + j != s[i])
+                adj[i][j] = adj[pi[i - 1]][j];
             else
                 adj[i][j] = i + (id + j == s[i]);
     return adj;
