@@ -1,7 +1,8 @@
-// O(Nlog(log(N)))
 const int N = 1e6 + 1;
 bitset<N> is_prime;
 vector<int> primes;
+
+// O(Nlog(log(N)))
 void build() {
     is_prime.set();
     is_prime[0] = is_prime[1] = 0;

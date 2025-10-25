@@ -1,6 +1,7 @@
-// O(N)
 const int N = 1e6 + 1;
 vector<int> spf(N), mobius(N), primes;
+
+// O(N)
 void build() {
     mobius[1] = 1;
     for (int i = 2; i < N; i++) {

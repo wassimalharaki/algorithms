@@ -1,6 +1,7 @@
-// O(N)
 const int N = 1e6 + 1;
 vector<int> spf(N), primes;
+
+// O(N)
 void build() {
     for (int i = 2; i < N; i++) {
         if (spf[i] == 0) {
@@ -19,16 +20,14 @@ void build() {
 vector<int> gen_divisors(const vector<array<int, 2>>& pfs) {
     vector<int> divs{1};
 
-    auto f = [&](int x, int i, auto&& self) -> void {
-        if (i >= (int) pfs.size()) return;
-        self(x, i + 1, self);
-        for (int j = 0; j < pfs[i][1]; j++) {
-            x *= pfs[i][0];
-            divs.push_back(x);
-            self(x, i + 1, self);
+    for (auto [p, k] : pfs) {
+        int n = divs.size(), x = p;
+        while (k--) {
+            for (int i = 0; i < n; i++)
+                divs.push_back(x * divs[i]);
+            x *= p;
         }
-    };
-    f(1, 0, f);
+    }
 
     // sort(divs.begin(), divs.end());
     return divs;

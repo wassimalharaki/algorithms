@@ -1,6 +1,6 @@
 const int N = 1e6 + 1;
 const int mod = 1e9 + 7;
-int fact[N], inv_num[N], inv_fact[N];
+vector<int> fact(N), inv_num(N), inv_fact(N);
 
 // O(N)
 void build() {

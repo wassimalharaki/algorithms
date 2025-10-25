@@ -1,6 +1,7 @@
-// O(N)
 const int N = 1e6 + 1;
 vector<int> spf(N), primes;
+
+// O(N)
 void build() {
     for (int i = 2; i < N; i++) {
         if (spf[i] == 0) {

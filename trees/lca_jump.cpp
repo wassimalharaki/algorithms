@@ -8,20 +8,27 @@ struct LCA {
         go[root] = {0, root, root};
 
         auto dfs = [&](int u, int p, auto&& self) -> void {
-            for (const int& i : adj[u]) {
-                if (i == p) continue;
-                go[i].p = u;
-                go[i].d = go[u].d + 1;
-
-                int p2 = go[u].jump;
-                if (go[u].d == 2 * go[p2].d - go[go[p2].jump].d)
-                    go[i].jump = go[p2].jump;
-                else
-                    go[i].jump = u;
-                self(i, u, self);
-            }
+            for (const int& i : adj[u])
+                if (i != p)
+                    add_leaf(i, u);
         };
         dfs(root, -1, dfs);
+    }
+
+    LCA(int n, int root = 0) {
+        go.resize(n);
+        go[root] = {0, root, root};
+    }
+
+    void add_leaf(int u, int p) {
+        go[u].p = p;
+        go[u].d = go[p].d + 1;
+
+        int p2 = go[p].jump;
+        if (go[p].d == 2 * go[p2].d - go[go[p2].jump].d)
+            go[u].jump = go[p2].jump;
+        else
+            go[u].jump = p;
     }
 
     int jump(int a, int k) {

@@ -1,6 +1,6 @@
 const int N = 5e5 + 1;
 const int mod = 1e9 + 7;
-int part[N];
+vector<int> part(N);
 
 int pent(int n) {
     return n * (3 * n - 1) >> 1;

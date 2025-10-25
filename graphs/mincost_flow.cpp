@@ -11,6 +11,7 @@ struct csr {
         for (int i = 1; i <= n; i++)
             start[i] += start[i - 1];
 
+        auto counter = start;
         for (auto e : edges)
             elist[start[e.first]++] = e.second;
     }
@@ -123,8 +124,7 @@ struct mcf_graph {
             }
 
             Cost d = -dual_dist[s].first;
-            flow += c;
-            cost += c * d;
+            flow += c, cost += c * d;
             if (prev_cost_per_flow == d)
                 result.pop_back();
             result.push_back({flow, cost});

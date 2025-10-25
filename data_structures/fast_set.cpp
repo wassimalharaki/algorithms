@@ -6,7 +6,7 @@ struct fast_set {
     vector<vector<u64>> seg;
 
     fast_set() {}
-    fast_set(int n) { build(n); }
+    fast_set(int _n) { build(_n); }
 
     void build(int m) {
         seg.clear();
