@@ -6,8 +6,8 @@ struct two_sat {
 
     two_sat(int _n) {
         n = _n;
-        ans.resize(_n);
-        adj.resize(2 * _n);
+        ans.resize(n);
+        adj.resize(2 * n);
     }
 
     void add_clause(int i, bool f, int j, bool g) {
@@ -39,7 +39,7 @@ struct two_sat {
         };
 
         for (int i = 0; i < 2 * n; i++)
-            if (!disc[i]) dfs(i, dfs);
+            if (not disc[i]) dfs(i, dfs);
         return id;
     }
 

@@ -9,8 +9,10 @@ struct LCA {
 
         auto dfs = [&](int u, int p, auto&& self) -> void {
             for (const int& i : adj[u])
-                if (i != p)
+                if (i != p) {
                     add_leaf(i, u);
+                    self(i, u, self);
+                }
         };
         dfs(root, -1, dfs);
     }
